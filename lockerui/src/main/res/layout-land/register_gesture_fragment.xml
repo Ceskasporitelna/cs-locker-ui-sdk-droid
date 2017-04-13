@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_gesture_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/rl_gesture_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginStart="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_gesture_description_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="20dip"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_gesture_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_gesture_description_fragment"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dip"
+            android:gravity="center_horizontal"
+            android:text="@string/title_gesture_fragment"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/iv_gesture_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_gesture_fragment"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="10dip" />
+
+
+        <cz.csas.lockerui.components.SwitchButton
+            android:id="@+id/rl_switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_gesture_description_fragment"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_gesture_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dip"
+        android:layout_marginEnd="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/layout_round_dark_blue">
+
+            <cz.csas.lockerui.PatternView
+                android:id="@+id/pv_register_fragment"
+                android:layout_width="300dip"
+                android:layout_height="300dip"
+                android:layout_centerInParent="true"
+                app:circleColor="@color/csasColorWhite" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

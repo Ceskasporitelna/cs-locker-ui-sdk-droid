@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_info_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:contentDescription="@string/info_fragment_content_description"
+    android:padding="10dip">
+
+    <LinearLayout
+        android:id="@+id/ll_info_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="53dip"
+            android:layout_marginEnd="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="350dip"
+                android:layout_height="53dip"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_round_dark_red" />
+
+            <Button
+                android:id="@+id/btn_unregister_info_activity"
+                android:layout_width="350dip"
+                android:layout_height="50dip"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dip"
+                android:background="@drawable/button_round_red"
+                android:text="@string/btn_unregister_info_activity"
+                android:textColor="@color/csasColorWhite"
+                android:textSize="17sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="53dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginStart="5dip"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_change_info_background_activity"
+                android:layout_width="350dip"
+                android:layout_height="53dip"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_round_blue" />
+
+            <Button
+                android:id="@+id/btn_change_info_activity"
+                android:layout_width="350dip"
+                android:layout_height="50dip"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dip"
+                android:background="@drawable/button_round_white"
+                android:text="@string/btn_change_security_info_activity"
+                android:textColor="@color/csasColorPrimary"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_description_info_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll_info_buttons"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dip"
+        android:gravity="center_horizontal"
+        android:paddingLeft="50dip"
+        android:paddingRight="50dip"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_info_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_description_info_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:gravity="center_horizontal"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_info_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_info_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:layout_marginTop="10dip">
+
+        <ImageView
+            android:id="@+id/iv_info_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</RelativeLayout>

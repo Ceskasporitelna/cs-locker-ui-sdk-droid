@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_info_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:padding="10dip"
+    android:contentDescription="@string/info_fragment_content_description">
+
+    <Button
+        android:layout_width="350dip"
+        android:layout_height="53dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_round_dark_red" />
+
+    <Button
+        android:id="@+id/btn_unregister_info_activity"
+        android:layout_width="350dip"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dip"
+        android:background="@drawable/button_round_red"
+        android:text="@string/btn_unregister_info_activity"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/btn_change_info_background_activity"
+        android:layout_width="350dip"
+        android:layout_height="53dip"
+        android:layout_above="@id/btn_unregister_info_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="7dip"
+        android:background="@drawable/button_round_blue" />
+
+    <Button
+        android:id="@+id/btn_change_info_activity"
+        android:layout_width="350dip"
+        android:layout_height="50dip"
+        android:layout_above="@id/btn_unregister_info_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/button_round_white"
+        android:text="@string/btn_change_security_info_activity"
+        android:textColor="@color/csasColorPrimary"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tv_description_info_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_change_info_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dip"
+        android:gravity="center_horizontal"
+        android:paddingLeft="30dip"
+        android:paddingRight="30dip"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_info_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_description_info_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dip"
+        android:gravity="center_horizontal"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tv_info_activity">
+
+        <ImageView
+            android:id="@+id/iv_info_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</RelativeLayout>

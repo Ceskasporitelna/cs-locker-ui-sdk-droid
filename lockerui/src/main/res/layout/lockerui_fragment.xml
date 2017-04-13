@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_lockerui_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:padding="30dip"
+    android:contentDescription="@string/locker_ui_fragment_content_description">
+
+    <TextView
+        android:id="@+id/title_lockerui_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dip"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btn_unlock_or_register_background_lockerui_activity"
+        android:layout_width="350dip"
+        android:layout_height="53dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_round_blue"
+        android:clickable="false" />
+
+    <Button
+        android:id="@+id/btn_unlock_or_register_lockerui_activity"
+        android:layout_width="350dip"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dip"
+        android:background="@drawable/button_round_white"
+        android:textColor="@color/csasColorPrimary"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tv_unlock_or_register_description_lockerui_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_unlock_or_register_lockerui_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dip"
+        android:gravity="center_horizontal"
+        android:paddingLeft="30dip"
+        android:paddingRight="30dip"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_unlock_or_register_lockerui_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_unlock_or_register_description_lockerui_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dip"
+        android:gravity="center_horizontal"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tv_unlock_or_register_lockerui_activity"
+        android:layout_below="@id/title_lockerui_activity">
+
+        <ImageView
+            android:id="@+id/iv_lockerui_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

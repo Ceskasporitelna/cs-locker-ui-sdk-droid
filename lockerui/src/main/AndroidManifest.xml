@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="csas.cz.lockerui">
+
+    <!-- USE_FINGERPRINT is NORMAL Permission => https://developer.android.com/guide/topics/security/normal-permissions.html
+        It is granted automatically-->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
+    <application
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name="cz.csas.lockerui.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <activity android:name="cz.csas.cscore.locker.OAuthLoginActivity" />
+
+    </application>
+
+
+</manifest>

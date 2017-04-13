@@ -1,0 +1,3 @@
+[submodule "lib/cs-core-sdk-droid"]
+	path = lib/cs-core-sdk-droid
+	url = https://github.com/Ceskasporitelna/cs-core-sdk-droid-break.git

@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode readVersionCode()
+        versionName readVersionName()
+        consumerProguardFiles "consumer-proguard-rules.pro"
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            output.outputFile =
+                    new File(file.parent,
+                            file.name.replace("lockerui", "cs-locker-ui-sdk").replace(".aar", "-" + defaultConfig.versionName + ".aar"))
+
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':core')
+}
+
+
+// Thanks to https://medium.com/@kmlong1183/using-fastlane-tools-and-android-2e8d76bb138b#.ew4kj88sa
+def readVersionName() {
+    def version = readVersion()
+    return "${version["major"]}.${version["minor"]}.${version["patch"]}"
+}
+
+def readVersionCode() {
+    def version = readVersion()
+    def patch = version["patch"] as int
+    return patch
+}
+
+def readVersion() {
+    def versionFile = new File(project.rootDir, "version.properties")
+    def version = new Properties()
+    def stream
+    try {
+        stream = new FileInputStream(versionFile)
+        version.load(stream)
+    } catch (FileNotFoundException ignore) {
+    } finally {
+        if (stream != null) stream.close()
+    }
+
+    // safety defaults
+    if (!version["major"]) version["major"] = "1"
+    if (!version["minor"]) version["minor"] = "0"
+    if (!version["patch"]) version["patch"] = "0"
+    return version
+}

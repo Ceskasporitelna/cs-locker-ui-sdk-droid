@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_pin_point"
+    android:layout_width="25dip"
+    android:layout_height="25dip"
+    android:background="@drawable/pin_point_light">
+</RelativeLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_first_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dip">
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_two_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="2"
+            app:setNumber="@string/pin_number_two"
+            app:setText="@string/pin_text_two" />
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_one_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/pb_two_pin_activity"
+            android:contentDescription="1"
+            android:paddingRight="10dip"
+            app:setNumber="@string/pin_number_one" />
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_three_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pb_two_pin_activity"
+            android:contentDescription="3"
+            android:paddingLeft="10dip"
+            app:setNumber="@string/pin_number_three"
+            app:setText="@string/pin_text_three" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_second_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_first_row"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dip">
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_five_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="5"
+            app:setNumber="@string/pin_number_five"
+            app:setText="@string/pin_text_five" />
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_four_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/pb_five_pin_activity"
+            android:contentDescription="4"
+            android:paddingRight="10dip"
+            app:setNumber="@string/pin_number_four"
+            app:setText="@string/pin_text_four" />
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_six_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pb_five_pin_activity"
+            android:contentDescription="6"
+            android:paddingLeft="10dip"
+            app:setNumber="@string/pin_number_six"
+            app:setText="@string/pin_text_six" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_third_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_second_row"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dip">
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_eight_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="8"
+            app:setNumber="@string/pin_number_eight"
+            app:setText="@string/pin_text_eight" />
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_seven_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/pb_eight_pin_activity"
+            android:contentDescription="7"
+            android:paddingRight="10dip"
+            app:setNumber="@string/pin_number_seven"
+            app:setText="@string/pin_text_seven" />
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_nine_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pb_eight_pin_activity"
+            android:contentDescription="9"
+            android:paddingLeft="10dip"
+            app:setNumber="@string/pin_number_nine"
+            app:setText="@string/pin_text_nine" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_fourth_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_third_row"
+        android:layout_centerHorizontal="true">
+
+        <cz.csas.lockerui.components.PinButton
+            android:id="@+id/pb_zero_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:setCentral="true"
+            app:setNumber="@string/pin_number_zero" />
+
+        <cz.csas.lockerui.components.SwitchButton
+            android:id="@+id/sw_switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/pb_zero_pin_activity"
+            android:layout_toStartOf="@id/pb_zero_pin_activity"
+            android:contentDescription="@string/switch_button_description"
+            android:paddingRight="10dip" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pin_button_delete"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginStart="10dip"
+            android:layout_toEndOf="@id/pb_zero_pin_activity"
+            android:layout_toRightOf="@id/pb_zero_pin_activity"
+            android:background="@drawable/pin_button_white">
+
+            <TextView
+                android:id="@+id/tv_text_pin_button_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/pin_delete"
+                android:textColor="@color/csasColorPrimary"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

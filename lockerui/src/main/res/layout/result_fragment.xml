@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:contentDescription="@string/result_fragment_content_description"
+    android:padding="30dip">
+
+    <RelativeLayout
+        android:id="@+id/rl_progress_result_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_safelock_result_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="60dip">
+
+            <ImageView
+                android:id="@+id/iv_safelock_background_result_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_safelock_spinner_result_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_progress_result_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_safelock_result_activity"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dip"
+            android:gravity="center_horizontal"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_progress_description_result_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_progress_result_activity"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="30dip"
+            android:gravity="center_horizontal"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_result_result_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="53dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_round_blue" />
+
+        <Button
+            android:id="@+id/btn_new_registration_result_activity"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="3dip"
+            android:background="@drawable/button_round_white"
+            android:text="@string/btn_new_registration_result_activity"
+            android:textColor="@color/csasColorPrimary"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_failure_description_result_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_new_registration_result_activity"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dip"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="@string/authorization_failed_description_result_activity"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_failure_result_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_failure_description_result_activity"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dip"
+            android:gravity="center_horizontal"
+            android:text="@string/authorization_failed_result_activity"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="20sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/tv_failure_result_activity"
+            android:layout_below="@id/title_lockerui_activity">
+
+            <ImageView
+                android:id="@+id/iv_result_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:contentDescription="@string/fingerprint_fragment_content_description"
+    android:padding="10dip">
+
+    <RelativeLayout
+        android:id="@+id/rl_fingerprint_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dip"
+        android:layout_marginTop="20dip">
+
+        <ImageView
+            android:id="@+id/iv_fingerprint_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:id="@+id/iv_fingerprint_broken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icons_finger_broken_overlay"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_fingerprint_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_fingerprint_fragment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dip"
+        android:gravity="center_horizontal"
+        android:text="@string/title_fingerprint_fragment"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_description_fingerprint_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_fingerprint_fragment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dip"
+        android:gravity="center_horizontal"
+        android:paddingLeft="30dip"
+        android:paddingRight="30dip"
+        android:text="@string/description_in_progress_fingerprint_fragment"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/btn_new_registration_fingerprint_fragment_background"
+        android:layout_width="350dip"
+        android:layout_height="53dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_round_dark_red"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btn_new_registration_fingerprint_fragment"
+        android:layout_width="350dip"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dip"
+        android:background="@drawable/button_round_red"
+        android:text="@string/btn_fingerprint_new_registration"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="17sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btn_fingerprint_background"
+        android:layout_width="350dip"
+        android:layout_height="53dip"
+        android:layout_above="@id/btn_new_registration_fingerprint_fragment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="7dip"
+        android:background="@drawable/button_round_blue"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btn_fingerprint"
+        android:layout_width="350dip"
+        android:layout_height="50dip"
+        android:layout_above="@id/btn_new_registration_fingerprint_fragment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/button_round_white"
+        android:textColor="@color/csasColorPrimary"
+        android:textSize="17sp"
+        android:visibility="invisible" />
+</RelativeLayout>

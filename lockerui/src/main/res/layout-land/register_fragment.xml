@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:contentDescription="@string/register_fragment_content_description"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginStart="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_security_register_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="20dip"
+            android:gravity="center_horizontal"
+            android:text="@string/security_register_activity"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/iv_security_register_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_security_register_activity"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="20dip"/>
+
+        <TextView
+            android:id="@+id/tv_security_description_register_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_security_register_activity"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:text="@string/security_description_register_activity"
+            android:textColor="@color/csasColorWhite"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dip"
+        android:layout_marginEnd="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/layout_round_dark_blue"
+            android:paddingBottom="10dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:paddingTop="10dip">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_pin_register_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="10dip"
+                    android:background="@drawable/button_round_dark_blue"
+                    android:drawableLeft="@drawable/button_dots"
+                    android:drawablePadding="10dip"
+                    android:drawableStart="@drawable/button_dots"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="@string/pin_register_activity"
+                    android:textColor="@color/csasColorWhite"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_fingerprint_register_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:layout_below="@id/btn_pin_register_activity"
+                    android:layout_marginBottom="10dip"
+                    android:background="@drawable/button_round_dark_blue"
+                    android:drawableLeft="@drawable/button_fingerprint"
+                    android:drawablePadding="10dip"
+                    android:drawableStart="@drawable/button_fingerprint"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="@string/fingerprint_register_activity"
+                    android:textColor="@color/csasColorWhite"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_gesture_register_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:layout_below="@id/btn_fingerprint_register_activity"
+                    android:layout_marginBottom="10dip"
+                    android:background="@drawable/button_round_dark_blue"
+                    android:drawableLeft="@drawable/button_gesture"
+                    android:drawablePadding="10dip"
+                    android:drawableStart="@drawable/button_gesture"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="@string/gesture_register_activity"
+                    android:textColor="@color/csasColorWhite"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_no_security_register_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:layout_below="@id/btn_gesture_register_activity"
+                    android:background="@drawable/button_round_dark_blue"
+                    android:drawableLeft="@drawable/button_no_safety"
+                    android:drawablePadding="10dip"
+                    android:drawableStart="@drawable/button_no_safety"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="@string/no_security_register_activity"
+                    android:textColor="@color/csasColorWhite"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_pin_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:contentDescription="@string/pin_fragment_content_description"
+    android:padding="10dip">
+
+    <TextView
+        android:id="@+id/tv_title_register_pin_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dip"
+        android:gravity="center_horizontal"
+        android:text="@string/again_pin_register_pin_activity"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_description_register_pin_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title_register_pin_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dip"
+        android:gravity="center_horizontal"
+        android:textColor="@color/csasColorWhite"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_points_pin_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="25dip"
+        android:layout_below="@id/tv_description_register_pin_activity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:orientation="horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_points_pin_activity">
+
+        <cz.csas.lockerui.components.PinPad
+            android:id="@+id/pp_pinpad_pin_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
