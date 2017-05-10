@@ -106,8 +106,8 @@ platform :android do
     # Commit files
     #######################
 
-    git_add(path: ["./CHANGELOG.md", "./version.properties"])
-    git_commit(path: ["./CHANGELOG.md", "./version.properties"], message: "Version Bump")
+    git_add(path: ["./CHANGELOG.md", "./version.properties", "./descriptor.json"])
+    git_commit(path: ["./CHANGELOG.md", "./version.properties", "./descriptor.json"], message: "Version Bump")
     add_git_tag(tag: "v#{new_version}", sign: true)
 
 
@@ -116,14 +116,6 @@ platform :android do
     #######################
 
     push_to_git_remote(remote_branch: remote_branch)
-
-    #######################
-    # Assemble aar files
-    #######################
-
-    gradle(task: "assembleDebug")
-    gradle(task: "assembleRelease")
-
 
     ########################
     # Notify People

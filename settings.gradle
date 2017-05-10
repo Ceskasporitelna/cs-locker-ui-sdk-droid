@@ -1,4 +1,1 @@
 include ':lockerui'
-include ':core'
-project (':core').projectDir = new File(settingsDir, 'lib/cs-core-sdk-droid/core')
-

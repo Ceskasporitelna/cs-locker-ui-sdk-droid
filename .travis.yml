@@ -46,3 +46,13 @@ script:
 
 after_success:
   - sh ./sign.sh
+
+before_deploy: "./gradlew install"
+
+deploy:
+  provider: bintray
+  file: ./descriptor.json
+  user: $BINTRAY_USER
+  key: $BINTRAY_API_KEY
+  on:
+      all_branches: true
