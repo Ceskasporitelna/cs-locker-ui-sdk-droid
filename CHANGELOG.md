@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2017-05-10
+
 ## Changed
 
 - LockerUISDK released to JCenter
