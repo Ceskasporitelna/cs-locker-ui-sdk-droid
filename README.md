@@ -15,37 +15,33 @@
 - Android Studio 1.5+
 
 # LockerUI Installation
-**IMPORTANT!** You need to have your SSH keys registered with the GitHub since this repository is private.
 
 ## Install
-You can install CSLockerUI using the following git and gradle settings.
+You can install LockerUISDK using the following gradle settings.
 
-1. Navigate to your git configured project repository and process this command to add CSLockerUI as a submodule:
-```
-    git submodule add https://github.com/Ceskasporitelna/cs-locker-ui-sdk-droid.git your_lib_folder/cs-locker-ui-sdk-droid
-```
-
-2. Insert these two lines into your project settings.gradle file to include your submodules:
+1. Check your project build.gradle file that it contains `JCenter` repository:
 ```gradle
-    include ':core'
-    project (':core').projectDir = new File(settingsDir, 'your_lib_folder/cs-locker-ui-sdk-droid/lib/cs-core-sdk-droid/core')
-    include ':lockerui'
-    project (':lockerui').projectDir = new File(settingsDir, 'your_lib_folder/cs-locker-ui-sdk-droid/lockerui')
+    allprojects {
+        repositories {
+            ...
+            jcenter()
+            ...
+        }
+    }
 ```
 
-3. Insert this line into your module build.gradle file to compile your submodules:
+2. Insert this line into your module build.gradle file to compile CoreSDK:
 ```gradle
     dependencies {
         ...
-        compile project(':core')
-        compile project(':lockerui')
+        compile 'cz.csas:cs-core-sdk:1.1.1@aar'
+        compile 'cz.csas:cs-locker-ui-sdk:1.1.0@aar'
         ...
     }
 ```
 
 # Usage
-
-After you've installed the SDK using git submodules you will be able to use the module in your project.
+After you've installed the SDK you will be able to use the module in your project.
 Also CSLockerUI has dependency to CSCoreSDK, you will be able to use it as well.
 
 **See [CoreSDK](https://github.com/Ceskasporitelna/cs-core-sdk-droid)**

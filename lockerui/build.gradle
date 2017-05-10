@@ -1,3 +1,6 @@
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
@@ -76,6 +79,7 @@ install {
 
 
 // Thanks to https://medium.com/@kmlong1183/using-fastlane-tools-and-android-2e8d76bb138b#.ew4kj88sa
+
 def readVersionName() {
     def version = readVersion()
     return "${version["major"]}.${version["minor"]}.${version["patch"]}"
@@ -104,6 +108,74 @@ def readVersion() {
     if (!version["minor"]) version["minor"] = "0"
     if (!version["patch"]) version["patch"] = "0"
     return version
+}
+
+def incrementBuildVersion(def type = "patch") {
+    def version = readVersion()
+
+    def major = version["major"] as int
+    def minor = version["minor"] as int
+    def patch = version["patch"] as int
+
+    if (type == "major") {
+        major++
+        minor = 0
+        patch = 0
+    } else if (type == "minor") {
+        minor++
+        patch = 0
+    } else if (type == "patch") {
+        patch++
+    }
+
+    version["major"] = major.toString()
+    version["minor"] = minor.toString()
+    version["patch"] = patch.toString()
+
+    // write into version.properties
+
+    def versionFile = new File(project.rootDir, "version.properties")
+    def stream = new FileOutputStream(versionFile)
+    try {
+        version.store(stream, null)
+    } finally {
+        stream.close()
+    }
+
+    // fix descriptor.json bintray file version
+
+    def descriptorFile = new File(project.rootDir, "descriptor.json")
+    def descriptor = new JsonSlurper().parse(descriptorFile)
+    def versionName = major + "." + minor + "." + patch
+    def projectName = descriptor.files[0].uploadPattern.split("/")[2];
+    def path = "cz/csas/" + projectName + "/" +versionName + "/";
+
+    descriptor.version.name = versionName
+    descriptor.version.vcs_tag = versionName
+    descriptor.version.released = new Date().format('yyyy-MM-dd')
+
+    descriptor.files[0].uploadPattern = path + "\$1";
+    descriptor.files[1].uploadPattern = path + projectName + "-" + versionName + ".aar";
+    descriptor.files[2].uploadPattern = path + projectName + "-" + versionName + ".pom";
+
+    descriptorFile.write(new JsonBuilder(descriptor).toPrettyString())
+
+    println "Version is now: {" + versionName + "}"
+}
+
+task doMajorVersionIncrement << {
+    println "Incrementing major version..."
+    incrementBuildVersion("major")
+}
+
+task doMinorVersionIncrement << {
+    println "Incrementing minor version..."
+    incrementBuildVersion("minor")
+}
+
+task doPatchVersionIncrement << {
+    println "Incrementing patch version..."
+    incrementBuildVersion("patch")
 }
 
 // generate the javadoc and sources https://code.tutsplus.com/tutorials/creating-and-publishing-an-android-library--cms-24582#
