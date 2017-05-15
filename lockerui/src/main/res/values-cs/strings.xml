@@ -15,7 +15,7 @@
     <string name="new_pin_register_pin_activity">Nový PIN</string>
     <string name="pin_unlock_pin_activity">Zadejte PIN</string>
     <string name="wrong_pin_description_unlock_pin_activity">Chybný PIN. Počet zbývajících pokusů: %1$d.</string>
-    <string name="wrong_pin_description_change_password_pin_activity">Chybný PIN.</string>
+    <string name="wrong_pin_description_change_password_pin_activity">Chybný PIN</string>
     <string name="again_pin_register_pin_activity">Zopakujte PIN</string>
     <string name="wrong_pin_description_register_pin_activity">PIN se neshoduje, opakujte zadání</string>
     <string name="title_gesture_fragment">Zadejte gesto</string>
@@ -23,7 +23,7 @@
     <string name="description_tutorial_low_gesture_fragment">Musíte zvolit alespoň %1$d body.</string>
     <string name="description_tutorial_gesture_fragment">Musíte zvolit alespoň %1$d bodů.</string>
     <string name="wrong_gesture_description_unlock_gesture_activity">Špatné gesto. Počet zbývajících pokusů %1$d.</string>
-    <string name="single_attempt_wrong_gesture_description_unlock_gesture_activity">Chybné gesto. Počet zbývajících pokusů %1$d.</string>
+    <string name="single_attempt_wrong_gesture_description_unlock_gesture_activity">Špatné gesto. Počet zbývajících pokusů %1$d.</string>
     <string name="description_failure_gesture_fragment">Gesta se neshodují. Zadejte prosím nové gesto.</string>
     <string name="description_failed_fingerprint_fragment">Bohužel nebylo možné ověřit Vaši identitu pomocí otisku prstu.</string>
     <string name="description_in_progress_fingerprint_fragment">Použijte otisk prstu pro odemknutí.</string>
@@ -33,9 +33,9 @@
     <string name="btn_fingerprint_set">NASTAVIT OTISK PRSTU</string>
     <string name="btn_fingerprint_repeat">OPAKOVAT</string>
     <string name="btn_fingerprint_new_registration">NOVÁ REGISTRACE</string>
-    <string name="authorization_failed_result_activity">Příhlášení selhalo</string>
+    <string name="authorization_failed_result_activity">Přihlášení selhalo</string>
     <string name="registration_failed_result_activity">Registrace selhala</string>
-    <string name="authorization_failed_description_result_activity">Byl překročen limit pokusů o přihlášení. Z bezpečnostních důvodu byla Vaše registrace zrušena.</string>
+    <string name="authorization_failed_description_result_activity">Byl překročen limit pokusů o přihlášení. Z bezpečnostních důvodů byla Vaše registrace zrušena.</string>
     <string name="authorization_failed_unregistered_description_result_activity">Z důvodu změny konfigurace byla Vaše registrace zrušena.</string>
     <string name="registration_failed_description_result_activity">Bohužel nebylo možné Vaši registraci dokončit. Zkuste to prosím znovu.</string>
     <string name="spinlock_result_activity">Moment.</string>
