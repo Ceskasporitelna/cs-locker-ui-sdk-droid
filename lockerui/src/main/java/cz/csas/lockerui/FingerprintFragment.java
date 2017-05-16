@@ -12,12 +12,14 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -47,6 +49,7 @@ import cz.csas.lockerui.utils.TypefaceUtils;
 @SuppressLint({"ValidFragment", "NewApi"})
 public class FingerprintFragment extends Fragment implements FingerprintHelper.Callback {
 
+    private RelativeLayout mRlFingerprintParent;
     private ImageView mIvPicture;
     private TextView mTvTitle;
     private TextView mTvDescription;
@@ -140,6 +143,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
         mBtnFingerprintBackground = (Button) rootView.findViewById(R.id.btn_fingerprint_background);
         mBtnNewRegistration = (Button) rootView.findViewById(R.id.btn_new_registration_fingerprint_fragment);
         mBtnNewRegistrationBackground = (Button) rootView.findViewById(R.id.btn_new_registration_fingerprint_fragment_background);
+        mRlFingerprintParent = (RelativeLayout) rootView.findViewById(R.id.rl_fingerprint_parent);
 
         mTvTitle.setTypeface(TypefaceUtils.getRobotoBlack(getActivity()));
         mTvDescription.setTypeface(TypefaceUtils.getRobotoRegular(getActivity()));
@@ -200,6 +204,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
     @Override
     public void onResume() {
         super.onResume();
+        readFragmentDescription();
         if (mFingerprintHelper != null)
             startAuthentiation();
     }
@@ -354,6 +359,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
                 View.VISIBLE,
                 View.VISIBLE,
                 msg);
+        mTvTitle.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
     }
 
     private void setButtonVisibility(int visibilityButtonOther, int visibilityButtonNewReg) {
@@ -376,5 +382,14 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
                 mBtnFingerprint.setText(getString(btnText));
             setButtonVisibility(visibilityButtonOther, visibilityButtonNewReg);
         }
+    }
+
+    private void readFragmentDescription() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRlFingerprintParent.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+            }
+        }, 1000);
     }
 }

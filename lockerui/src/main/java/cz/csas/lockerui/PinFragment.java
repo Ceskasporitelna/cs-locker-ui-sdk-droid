@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
@@ -54,7 +55,7 @@ import static cz.csas.lockerui.utils.ColorUtils.setBackground;
 public class PinFragment extends Fragment implements View.OnClickListener {
 
     private LockerUIManagerImpl mLockerUIManagerImpl;
-    private RelativeLayout mRlPinMain;
+    private RelativeLayout mRlPinParent;
     private TextView mTvTitle;
     private TextView mTvDescription;
     private LinearLayout mLlPinPoints;
@@ -112,7 +113,7 @@ public class PinFragment extends Fragment implements View.OnClickListener {
 
     private void init(View rootView) {
         // init all components
-        mRlPinMain = (RelativeLayout) rootView.findViewById(R.id.rl_pin_main);
+        mRlPinParent = (RelativeLayout) rootView.findViewById(R.id.rl_pin_parent);
         mTvTitle = (TextView) rootView.findViewById(R.id.tv_title_register_pin_activity);
         mTvDescription = (TextView) rootView.findViewById(R.id.tv_description_register_pin_activity);
         mLlPinPoints = (LinearLayout) rootView.findViewById(R.id.ll_points_pin_activity);
@@ -185,6 +186,12 @@ public class PinFragment extends Fragment implements View.OnClickListener {
             }
         } else if (mState == State.USER_UNREGISTERED)
             mTvTitle.setText(R.string.new_pin_register_pin_activity);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        readFragmentDescription();
     }
 
     @Override
@@ -388,17 +395,29 @@ public class PinFragment extends Fragment implements View.OnClickListener {
     private void setMainViewContentDescription(LockTypeState lockTypeState) {
         switch (lockTypeState) {
             case REPEAT_CODE:
-                if (mRlPinMain != null)
-                    mRlPinMain.setContentDescription(getString(R.string.pin_fragment_content_repeat_description));
+                if (mRlPinParent != null)
+                    mRlPinParent.setContentDescription(getString(R.string.pin_fragment_content_repeat_description));
                 else
                     mLlPinParent.setContentDescription(getString(R.string.pin_fragment_content_repeat_description));
                 break;
             case NEW_CODE:
-                if (mRlPinMain != null)
-                    mRlPinMain.setContentDescription(getString(R.string.pin_fragment_content_description));
+                if (mRlPinParent != null)
+                    mRlPinParent.setContentDescription(getString(R.string.pin_fragment_content_description));
                 else
                     mLlPinParent.setContentDescription(getString(R.string.pin_fragment_content_description));
                 break;
         }
+    }
+
+    private void readFragmentDescription() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mRlPinParent != null)
+                    mRlPinParent.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+                else
+                    mLlPinParent.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+            }
+        }, 1000);
     }
 }

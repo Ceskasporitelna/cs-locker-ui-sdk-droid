@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -87,6 +89,7 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
         mBtnUnlockOrRegistration = (Button) rootView.findViewById(R.id.btn_unlock_or_register_lockerui_activity);
         mBtnUnlockOrRegistrationBackground = (Button) rootView.findViewById(R.id.btn_unlock_or_register_background_lockerui_activity);
         mIvLockerImage = (ImageView) rootView.findViewById(R.id.iv_lockerui_activity);
+        mRlLockerUiActivity = (RelativeLayout) rootView.findViewById(R.id.rl_lockerui_activity);
 
         mBtnUnlockOrRegistration.setTypeface(TypefaceUtils.getRobotoBlack(getActivity()));
         mTvUnlockOrRegistrationDescription.setTypeface(TypefaceUtils.getRobotoRegular(getActivity()));
@@ -106,6 +109,12 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
         SkipStatusScreen skipStatusScreen = ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getAuthFlowOptions().getSkipStatusScreen();
         if (skipStatusScreen != null && (skipStatusScreen == SkipStatusScreen.ALWAYS || (skipStatusScreen == SkipStatusScreen.WHEN_LOCKED && mState == State.USER_LOCKED) || (skipStatusScreen == SkipStatusScreen.WHEN_NOT_REGISTERED && mState == State.USER_UNREGISTERED)))
             onClick(mBtnUnlockOrRegistration);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        readFragmentDescription();
     }
 
     private void setState() {
@@ -200,5 +209,14 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
         ColorUtils.colorizeButton(mBtnUnlockOrRegistration, lightColor, Color.WHITE);
         ColorUtils.colorizeButtonBackground(mBtnUnlockOrRegistrationBackground, lightColor);
         mBtnUnlockOrRegistration.setTextColor(LockerUI.mLockerUIManager.getDarkColor());
+    }
+
+    private void readFragmentDescription() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRlLockerUiActivity.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+            }
+        }, 1000);
     }
 }

@@ -6,10 +6,12 @@ import android.app.Fragment;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -40,6 +42,7 @@ import static cz.csas.lockerui.LockerUI.LOCKER_UI_MODULE;
 public class InfoFragment extends Fragment {
 
     private LogManager mLogManager;
+    private RelativeLayout mRlInfoParent;
     private Button mBtnUnregister;
     private Button mBtnChangeLock;
     private Button mBtnChangeLockBackground;
@@ -85,6 +88,7 @@ public class InfoFragment extends Fragment {
         mTvInfoDescription = (TextView) rootView.findViewById(R.id.tv_description_info_activity);
         mTvInfoTitle = (TextView) rootView.findViewById(R.id.tv_info_activity);
         mIvInfo = (ImageView) rootView.findViewById(R.id.iv_info_fragment);
+        mRlInfoParent = (RelativeLayout) rootView.findViewById(R.id.rl_info_parent);
         mUnregisterDialog = new MaterialDialog(getActivity());
 
         mBtnChangeLock.setTypeface(TypefaceUtils.getRobotoBlack(getActivity()));
@@ -118,10 +122,11 @@ public class InfoFragment extends Fragment {
                             .setPositiveButton(R.string.dialog_unregister_cancel_info_activity, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    MainActivity.onUnregistrationSuccess();
                                     ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CallbackBasic<LockerStatus>() {
                                         @Override
                                         public void success(LockerStatus lockerStatus) {
-                                            MainActivity.onUnregistrationSuccess();
+
                                         }
 
                                         @Override
@@ -162,6 +167,12 @@ public class InfoFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        readFragmentDescription();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mUnregisterDialog != null)
@@ -182,5 +193,14 @@ public class InfoFragment extends Fragment {
             mTvInfoDescription.setText(getString(R.string.actual_lock_type_info_activity, getString(R.string.lock_type_fingerprint)));
         else
             mTvInfoDescription.setText(getString(R.string.actual_lock_type_info_activity, getString(R.string.lock_type_none)));
+    }
+
+    private void readFragmentDescription() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRlInfoParent.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+            }
+        }, 1000);
     }
 }

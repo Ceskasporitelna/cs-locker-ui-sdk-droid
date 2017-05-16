@@ -90,6 +90,7 @@
     <string name="pin_fragment_content_repeat_description">This page allows to repeat PIN to register or unlock.</string>
     <string name="fingerprint_fragment_content_description">This page provides fingerprint verification. Please place your finger on the fingerprint scanner of your device.</string>
     <string name="result_fragment_content_description">This is registration or unlock progress page.</string>
+    <string name="result_failure_fragment_content_description">This is registration or result page. Something went wrong.</string>
     <string name="info_fragment_content_description">This page allows to unregister or change lock type.</string>
     <string name="switch_button_description">This button switch the landscape screen.</string>
 

@@ -90,6 +90,7 @@
     <string name="pin_fragment_content_repeat_description">Tato stránka umožňuje zopakovat PIN.</string>
     <string name="fingerprint_fragment_content_description">Tato stránka umožňuje ověřit pomocí otisku prstu. Prosím přiložte prst na skener otisku prstů vašeho zařízení.</string>
     <string name="result_fragment_content_description">Toto je vyčkávací stránka, operace se vyřižuje.</string>
+    <string name="result_failure_fragment_content_description">Toto je chybová stránka, operaci se nepodařilo vyřídit.</string>
     <string name="info_fragment_content_description">Tato stránka umožňuje odregistraci nebo změnu zabezpečení.</string>
     <string name="switch_button_description">Toto tlačítko přepíná uspořádání obrazovky při orientaci na šířku.</string>
 

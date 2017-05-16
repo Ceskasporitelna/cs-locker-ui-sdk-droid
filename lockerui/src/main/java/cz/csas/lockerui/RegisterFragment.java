@@ -10,11 +10,13 @@ import android.content.res.Configuration;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,6 +50,8 @@ import cz.csas.lockerui.utils.TypefaceUtils;
 public class RegisterFragment extends Fragment {
 
     private FragmentCallback mFragmentCallback;
+    private LinearLayout mLlRegisterParent;
+    private RelativeLayout mRlRegisterParent;
     private Button mBtnPin;
     private Button mBtnFingerprint;
     private Button mBtnGesture;
@@ -98,6 +102,8 @@ public class RegisterFragment extends Fragment {
         mTvTitle = (TextView) rootView.findViewById(R.id.tv_security_register_activity);
         mTvDescription = (TextView) rootView.findViewById(R.id.tv_security_description_register_activity);
         mIvSecurity = (ImageView) rootView.findViewById(R.id.iv_security_register_activity);
+        mLlRegisterParent = (LinearLayout) rootView.findViewById(R.id.ll_register_parent);
+        mRlRegisterParent = (RelativeLayout) rootView.findViewById(R.id.rl_register_parent);
 
         mBtnGesture.setTypeface(TypefaceUtils.getRobotoBlack(getActivity()));
         mBtnNoSecurity.setTypeface(TypefaceUtils.getRobotoBlack(getActivity()));
@@ -153,6 +159,12 @@ public class RegisterFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        readFragmentDescription();
     }
 
     private void setLockTypes() {
@@ -228,5 +240,17 @@ public class RegisterFragment extends Fragment {
 
         );
         mFragmentCallback.changeFragmentToResult();
+    }
+
+    private void readFragmentDescription() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mRlRegisterParent != null)
+                    mRlRegisterParent.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+                else
+                    mLlRegisterParent.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+            }
+        }, 1000);
     }
 }

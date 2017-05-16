@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -49,6 +50,7 @@ import static cz.csas.lockerui.LockerUI.LOCKER_UI_MODULE;
 @SuppressLint("ValidFragment")
 public class ResultFragment extends Fragment {
 
+    private RelativeLayout mRlResultParent;
     private RelativeLayout mRlSafelock;
     private ImageView mIvSafelockBackground;
     private ImageView mIvSafelockSpinner;
@@ -62,7 +64,8 @@ public class ResultFragment extends Fragment {
     private TextView mTvProgressDescription;
     private FragmentCallback mFragmentCallback;
     private LogManager mLogManager;
-    boolean mOrientationChanged = true;
+    private boolean mOrientationChanged = true;
+    private boolean mHasError = false;
 
     private float fromDegrees = 0;
     private float toDegrees = 0;
@@ -118,6 +121,7 @@ public class ResultFragment extends Fragment {
         mTvFailureDescription = (TextView) rootView.findViewById(R.id.tv_failure_description_result_activity);
         mTvProgress = (TextView) rootView.findViewById(R.id.tv_progress_result_activity);
         mTvProgressDescription = (TextView) rootView.findViewById(R.id.tv_progress_description_result_activity);
+        mRlResultParent = (RelativeLayout) rootView.findViewById(R.id.rl_result_parent);
 
         mTvProgress.setTypeface(TypefaceUtils.getRobotoBlack(getActivity()));
         mTvProgressDescription.setTypeface(TypefaceUtils.getRobotoRegular(getActivity()));
@@ -183,7 +187,16 @@ public class ResultFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null && bundle.get(Constants.ERROR_KIND_EXTRA) != null) {
             handleError(bundle.getString(Constants.ERROR_KIND_EXTRA));
+            mHasError = true;
         }
+
+        setMainViewContentDescription();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        readFragmentDescription();
     }
 
     public void onUnlockFailed(CsSDKError error) {
@@ -274,4 +287,19 @@ public class ResultFragment extends Fragment {
         return false;
     }
 
+    private void setMainViewContentDescription() {
+        if (mHasError)
+            mRlResultParent.setContentDescription(getString(R.string.result_failure_fragment_content_description));
+        else
+            mRlResultParent.setContentDescription(getString(R.string.result_fragment_content_description));
+    }
+
+    private void readFragmentDescription() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRlResultParent.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+            }
+        }, 1000);
+    }
 }
