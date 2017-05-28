@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## Fixed
+- Issue #6 Unregister state not returned properly
+
 ## [1.1.1] - 2017-05-16
 
 ## Fixed
