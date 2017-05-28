@@ -122,11 +122,10 @@ public class InfoFragment extends Fragment {
                             .setPositiveButton(R.string.dialog_unregister_cancel_info_activity, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    MainActivity.onUnregistrationSuccess();
                                     ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CallbackBasic<LockerStatus>() {
                                         @Override
                                         public void success(LockerStatus lockerStatus) {
-
+                                            MainActivity.onUnregistrationSuccess();
                                         }
 
                                         @Override

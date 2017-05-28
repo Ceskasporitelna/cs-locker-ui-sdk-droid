@@ -30,9 +30,6 @@ android:
   licenses:
       - 'android-sdk-license-.+'
 
-git:
-    submodules: false
-
 before_install:
   - echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc
   - rvm install 2.0.0
@@ -41,13 +38,14 @@ before_install:
 script:
   - git config --global user.name "CSAS Developers"
   - git config --global user.email developers@csas.cz
-  - git submodule update --init --recursive
+  - ./gradlew clean
   - ./gradlew build
 
 after_success:
   - sh ./sign.sh
 
-before_deploy: "./gradlew install"
+before_deploy:
+  - ./gradlew install
 
 deploy:
   provider: bintray

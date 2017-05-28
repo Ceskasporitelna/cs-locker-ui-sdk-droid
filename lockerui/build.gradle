@@ -49,7 +49,7 @@ install {
                 packaging 'aar'
 
                 // Add your description here
-                // name 'cz.csas.core'
+                name 'cs-locker-ui-sdk'
                 description = 'LockerUI SDK project powered by Ceska Sporitelna a.s.'
                 url 'https://github.com/Ceskasporitelna/cs-locker-ui-sdk-droid'
 

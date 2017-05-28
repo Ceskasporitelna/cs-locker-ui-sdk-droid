@@ -30,12 +30,12 @@ You can install LockerUISDK using the following gradle settings.
     }
 ```
 
-2. Insert this line into your module build.gradle file to compile CoreSDK:
+2. Insert these lines into your module build.gradle file to compile LockerUISDK and CoreSDK (change x.y.z to the version you want to use):
 ```gradle
     dependencies {
         ...
-        compile 'cz.csas:cs-core-sdk:1.1.1@aar'
-        compile 'cz.csas:cs-locker-ui-sdk:1.1.0@aar'
+        compile 'cz.csas:cs-core-sdk:x.y.z@aar'
+        compile 'cz.csas:cs-locker-ui-sdk:x.y.z@aar'
         ...
     }
 ```
