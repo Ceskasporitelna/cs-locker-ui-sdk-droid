@@ -26,10 +26,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import csas.cz.lockerui.R;
-import cz.csas.cscore.client.rest.Callback;
 import cz.csas.cscore.client.rest.CallbackBasic;
+import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.LockType;
 import cz.csas.cscore.locker.LockerRegistrationProcess;
 import cz.csas.cscore.locker.LockerStatus;
@@ -97,16 +98,17 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
                         View.INVISIBLE,
                         null);
             } else {
-                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CallbackBasic<LockerStatus>() {
+                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CsCallback<LockerStatus>() {
                     @Override
-                    public void success(LockerStatus lockerStatus) {
+                    public void success(LockerStatus lockerStatus, Response response) {
 
                     }
 
                     @Override
-                    public void failure() {
+                    public void failure(CsSDKError error) {
 
                     }
+
                 });
                 setUiComponents(R.string.authorization_failed_result_activity,
                         R.string.description_deleted_fingerprint_fragment,
@@ -182,14 +184,14 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
             public void onClick(View view) {
                 mState = LockerUI.getInstance().getLocker().getStatus().getState();
                 if (mState != State.USER_UNREGISTERED) {
-                    ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CallbackBasic<LockerStatus>() {
+                    ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CsCallback<LockerStatus>() {
                         @Override
-                        public void success(LockerStatus lockerStatus) {
+                        public void success(LockerStatus lockerStatus, Response response) {
                             startNewRegistration();
                         }
 
                         @Override
-                        public void failure() {
+                        public void failure(CsSDKError error) {
                             startNewRegistration();
                         }
                     });
@@ -244,7 +246,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
     }
 
     private void checkUnlockFingerprintResult(String fingerprintHash) {
-        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(fingerprintHash, new Callback<RegistrationOrUnlockResponse>() {
+        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(fingerprintHash, new CsCallback<RegistrationOrUnlockResponse>() {
             @Override
             public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                 if (registrationOrUnlockResponse instanceof OfflineUnlockResponse
@@ -256,7 +258,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
             }
 
             @Override
-            public void failure(CsRestError error) {
+            public void failure(CsSDKError error) {
                 if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                     MainActivity.onUnlockFailed(error);
             }
@@ -269,14 +271,14 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
             mOldFingerprintHash = ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getPassword();
         ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setPassword(null);
         if (fingerprintHash != null) {
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldFingerprintHash, new Password(LockType.FINGERPRINT, fingerprintHash), new Callback<PasswordResponse>() {
+            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldFingerprintHash, new Password(LockType.FINGERPRINT, fingerprintHash), new CsCallback<PasswordResponse>() {
                         @Override
                         public void success(PasswordResponse passwordResponse, Response response) {
                             MainActivity.onPasswordChangeSuccess(passwordResponse, LockType.FINGERPRINT);
                         }
 
                         @Override
-                        public void failure(CsRestError error) {
+                        public void failure(CsSDKError error) {
                             if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                                 MainActivity.onPasswordChangeFailure();
                         }
@@ -290,7 +292,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
     private void handlePasswordCheckFingerprint(String fingerprintHash) {
         mOldFingerprintHash = fingerprintHash;
         mFragmentCallback.changeFragmentToResult();
-        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mOldFingerprintHash, new Callback<RegistrationOrUnlockResponse>() {
+        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mOldFingerprintHash, new CsCallback<RegistrationOrUnlockResponse>() {
             @Override
             public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                 ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setPassword(mOldFingerprintHash);
@@ -299,7 +301,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
             }
 
             @Override
-            public void failure(CsRestError error) {
+            public void failure(CsSDKError error) {
                 if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                     MainActivity.onPasswordCheckFailure();
             }
@@ -318,17 +320,17 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
             public void failure() {
                 MainActivity.onRegistrationFailed();
             }
-        }, new Callback<RegistrationOrUnlockResponse>() {
+        }, new CsCallback<RegistrationOrUnlockResponse>() {
             @Override
             public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                 MainActivity.onRegistrationSuccess();
             }
 
             @Override
-            public void failure(CsRestError error) {
+            public void failure(CsSDKError error) {
                 if (LockerUIErrorHandler.handleError(mFragmentCallback, error)) {
                     if (((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback() != null)
-                        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure(error);
+                        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure((CsRestError) error);
                     MainActivity.onRegistrationFailed();
                 }
             }

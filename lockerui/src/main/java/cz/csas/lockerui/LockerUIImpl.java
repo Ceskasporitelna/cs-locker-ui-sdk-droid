@@ -7,6 +7,9 @@ import android.content.Intent;
 import cz.csas.cscore.CoreSDK;
 import cz.csas.cscore.client.rest.CallbackBasic;
 import cz.csas.cscore.client.rest.CallbackUI;
+import cz.csas.cscore.client.rest.CsCallback;
+import cz.csas.cscore.client.rest.client.Response;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.Locker;
 import cz.csas.cscore.locker.LockerStatus;
 import cz.csas.cscore.locker.State;
@@ -91,16 +94,15 @@ class LockerUIImpl extends LockerUI {
 
     @Override
     public void lockUser(final CallbackBasic<LockerStatus> callback) {
-        State state = getLocker().getStatus().getState();
-        if (state == State.USER_UNLOCKED) {
-            getLocker().lock(new CallbackBasic<LockerStatus>() {
+        if (getLocker().getStatus().getState() == State.USER_UNLOCKED || getLocker().getStatus().isVerifiedOffline()) {
+            getLocker().lock(new CsCallback<LockerStatus>() {
                 @Override
-                public void success(LockerStatus lockerStatus) {
+                public void success(LockerStatus lockerStatus, Response response) {
                     callback.success(lockerStatus);
                 }
 
                 @Override
-                public void failure() {
+                public void failure(CsSDKError error) {
                     callback.failure();
                 }
             });
@@ -113,14 +115,14 @@ class LockerUIImpl extends LockerUI {
     public void unregisterUser(final CallbackBasic<LockerStatus> callback) {
         State state = getLocker().getStatus().getState();
         if (state != State.USER_UNREGISTERED) {
-            getLocker().unregister(new CallbackBasic<LockerStatus>() {
+            getLocker().unregister(new CsCallback<LockerStatus>() {
                 @Override
-                public void success(LockerStatus lockerStatus) {
+                public void success(LockerStatus lockerStatus, Response response) {
                     callback.success(lockerStatus);
                 }
 
                 @Override
-                public void failure() {
+                public void failure(CsSDKError error) {
                     callback.failure();
                 }
             });

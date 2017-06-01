@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import csas.cz.lockerui.R;
-import cz.csas.cscore.client.rest.Callback;
+import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.OfflineUnlockResponse;
 import cz.csas.cscore.locker.Password;
 import cz.csas.cscore.locker.PasswordResponse;
@@ -300,7 +301,7 @@ public class PinFragment extends Fragment implements View.OnClickListener {
     }
 
     private void checkUnlockPinResult() {
-        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mCode, new Callback<RegistrationOrUnlockResponse>() {
+        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mCode, new CsCallback<RegistrationOrUnlockResponse>() {
             @Override
             public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                 if (registrationOrUnlockResponse instanceof OfflineUnlockResponse
@@ -312,7 +313,7 @@ public class PinFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void failure(CsRestError error) {
+            public void failure(CsSDKError error) {
                 if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                     MainActivity.onUnlockFailed(error);
             }
@@ -345,7 +346,7 @@ public class PinFragment extends Fragment implements View.OnClickListener {
             mPinBuilder.setLength(0);
             checkPinPoint();
             mFragmentCallback.changeFragmentToResult();
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mOldCode, new Callback<RegistrationOrUnlockResponse>() {
+            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mOldCode, new CsCallback<RegistrationOrUnlockResponse>() {
                 @Override
                 public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                     ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setPassword(mOldCode);
@@ -354,7 +355,7 @@ public class PinFragment extends Fragment implements View.OnClickListener {
                 }
 
                 @Override
-                public void failure(CsRestError error) {
+                public void failure(CsSDKError error) {
                     if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                         MainActivity.onPasswordCheckFailure();
                 }
@@ -368,14 +369,14 @@ public class PinFragment extends Fragment implements View.OnClickListener {
         ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setPassword(null);
 
         if (mCode != null && mRepeatCode != null && mCode.equals(mRepeatCode)) {
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldCode, new Password(cz.csas.cscore.locker.LockType.PIN, mCode, mCode.length()), new Callback<PasswordResponse>() {
+            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldCode, new Password(cz.csas.cscore.locker.LockType.PIN, mCode, mCode.length()), new CsCallback<PasswordResponse>() {
                         @Override
                         public void success(PasswordResponse passwordResponse, Response response) {
                             MainActivity.onPasswordChangeSuccess(passwordResponse, cz.csas.cscore.locker.LockType.PIN);
                         }
 
                         @Override
-                        public void failure(CsRestError error) {
+                        public void failure(CsSDKError error) {
                             if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                                 MainActivity.onPasswordChangeFailure();
                         }

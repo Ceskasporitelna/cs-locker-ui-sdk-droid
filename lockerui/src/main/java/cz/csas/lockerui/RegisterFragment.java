@@ -26,9 +26,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import csas.cz.lockerui.R;
-import cz.csas.cscore.client.rest.Callback;
-import cz.csas.cscore.client.rest.CsRestError;
+import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.client.Response;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.Password;
 import cz.csas.cscore.locker.PasswordResponse;
 import cz.csas.cscore.locker.State;
@@ -224,7 +224,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void handleNoneUnlocked() {
-        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getPassword(), new Password(cz.csas.cscore.locker.LockType.NONE, String.valueOf(System.currentTimeMillis())), new Callback<PasswordResponse>() {
+        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getPassword(), new Password(cz.csas.cscore.locker.LockType.NONE, String.valueOf(System.currentTimeMillis())), new CsCallback<PasswordResponse>() {
                     @Override
                     public void success(PasswordResponse passwordResponse, Response response) {
                         MainActivity.onPasswordChangeSuccess(passwordResponse, cz.csas.cscore.locker.LockType.NONE);
@@ -232,7 +232,7 @@ public class RegisterFragment extends Fragment {
 
                     @Override
 
-                    public void failure(CsRestError error) {
+                    public void failure(CsSDKError error) {
                         if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                             MainActivity.onPasswordChangeFailure();
                     }

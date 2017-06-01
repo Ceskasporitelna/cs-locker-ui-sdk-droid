@@ -2,6 +2,7 @@ package cz.csas.lockerui.error;
 
 import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.error.CsLockerError;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.lockerui.FragmentCallback;
 
 /**
@@ -17,23 +18,26 @@ public class LockerUIErrorHandler {
      * Handle error boolean.
      *
      * @param fragmentCallback the fragment callback
-     * @param cause            the cause
+     * @param error            the error
      * @return the boolean
      */
-    public static boolean handleError(FragmentCallback fragmentCallback, CsRestError cause) {
-        if (
-                cause.getKind() == CsRestError.Kind.NETWORK ||
-                        (cause.getKind() == CsRestError.Kind.UNEXPECTED
-                                && !(cause.getCause() instanceof CsLockerError
-                                && ((CsLockerError) cause.getCause()).getKind() == CsLockerError.Kind.OFFLINE_VERIFICATION)) ||
-                        cause.getKind() == CsRestError.Kind.CONVERSION ||
-                        //Or we get a HTTP status that is not 401 unauthorized
-                        (cause.getKind() == CsRestError.Kind.HTTP &&
-                                cause.getResponse() != null &&
-                                cause.getResponse().getStatus() != 401)) {
-            fragmentCallback.changeFragmentToResult(cause.getKind());
+    public static boolean handleError(FragmentCallback fragmentCallback, CsSDKError error) {
+        if (error instanceof CsRestError && checkRestError((CsRestError) error)) {
+            fragmentCallback.changeFragmentToResult(((CsRestError) error).getKind());
             return false;
         } else
             return true;
+    }
+
+    private static boolean checkRestError(CsRestError error) {
+        return error.getKind() == CsRestError.Kind.NETWORK ||
+                (error.getKind() == CsRestError.Kind.UNEXPECTED
+                        && !(error.getCause() instanceof CsLockerError
+                        && ((CsLockerError) error.getCause()).getKind() == CsLockerError.Kind.OFFLINE_VERIFICATION)) ||
+                error.getKind() == CsRestError.Kind.CONVERSION ||
+                //Or we get a HTTP status that is not 401 unauthorized
+                (error.getKind() == CsRestError.Kind.HTTP &&
+                        error.getResponse() != null &&
+                        error.getResponse().getStatus() != 401);
     }
 }

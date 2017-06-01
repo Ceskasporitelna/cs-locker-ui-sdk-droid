@@ -17,9 +17,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import csas.cz.lockerui.R;
-import cz.csas.cscore.client.rest.Callback;
+import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.OfflineUnlockResponse;
 import cz.csas.cscore.locker.Password;
 import cz.csas.cscore.locker.PasswordResponse;
@@ -200,7 +201,7 @@ public class GestureFragment extends Fragment implements PatternView.OnPatternDe
     }
 
     private void checkUnlockGestureResult() {
-        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mGestureHash, new Callback<RegistrationOrUnlockResponse>() {
+        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mGestureHash, new CsCallback<RegistrationOrUnlockResponse>() {
             @Override
             public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                 if (registrationOrUnlockResponse instanceof OfflineUnlockResponse
@@ -212,7 +213,7 @@ public class GestureFragment extends Fragment implements PatternView.OnPatternDe
             }
 
             @Override
-            public void failure(CsRestError error) {
+            public void failure(CsSDKError error) {
                 if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                     MainActivity.onUnlockFailed(error);
             }
@@ -237,7 +238,7 @@ public class GestureFragment extends Fragment implements PatternView.OnPatternDe
         if (mLockTypeState == LockTypeState.NEW_CODE) {
             mOldGestureHash = mPatternView.getPatternString();
             mFragmentCallback.changeFragmentToResult();
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mOldGestureHash, new Callback<RegistrationOrUnlockResponse>() {
+            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(mOldGestureHash, new CsCallback<RegistrationOrUnlockResponse>() {
                 @Override
                 public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                     ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setPassword(mOldGestureHash);
@@ -246,7 +247,7 @@ public class GestureFragment extends Fragment implements PatternView.OnPatternDe
                 }
 
                 @Override
-                public void failure(CsRestError error) {
+                public void failure(CsSDKError error) {
                     if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                         MainActivity.onPasswordCheckFailure();
                 }
@@ -260,14 +261,14 @@ public class GestureFragment extends Fragment implements PatternView.OnPatternDe
         ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setPassword(null);
 
         if (mGestureHash != null && mRepeatGestureHash != null && mGestureHash.equals(mRepeatGestureHash)) {
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldGestureHash, new Password(cz.csas.cscore.locker.LockType.GESTURE, mGestureHash, mPatternView.getGridSize()), new Callback<PasswordResponse>() {
+            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldGestureHash, new Password(cz.csas.cscore.locker.LockType.GESTURE, mGestureHash, mPatternView.getGridSize()), new CsCallback<PasswordResponse>() {
                         @Override
                         public void success(PasswordResponse passwordResponse, Response response) {
                             MainActivity.onPasswordChangeSuccess(passwordResponse, cz.csas.cscore.locker.LockType.GESTURE);
                         }
 
                         @Override
-                        public void failure(CsRestError error) {
+                        public void failure(CsSDKError error) {
                             if (LockerUIErrorHandler.handleError(mFragmentCallback, error))
                                 MainActivity.onPasswordChangeFailure();
                         }

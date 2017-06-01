@@ -19,10 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import csas.cz.lockerui.R;
-import cz.csas.cscore.client.rest.Callback;
 import cz.csas.cscore.client.rest.CallbackBasic;
+import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.LockType;
 import cz.csas.cscore.locker.LockerRegistrationProcess;
 import cz.csas.cscore.locker.LockerStatus;
@@ -147,17 +148,17 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
                 mFragmentCallback.changeFragmentToFingerprint();
             } else if (mLockType == cz.csas.cscore.locker.LockType.NONE) {
                 mFragmentCallback.changeFragmentToResult();
-                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(null, new Callback<RegistrationOrUnlockResponse>() {
+                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unlock(null, new CsCallback<RegistrationOrUnlockResponse>() {
                     @Override
                     public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                         MainActivity.onUnlockSuccess(registrationOrUnlockResponse);
                     }
 
                     @Override
-                    public void failure(CsRestError error) {
+                    public void failure(CsSDKError error) {
                         if (LockerUIErrorHandler.handleError(mFragmentCallback, error)) {
                             MainActivity.onUnlockFailed(error);
-                            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure(error);
+                            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure((CsRestError) error);
                         }
                     }
                 });
@@ -175,17 +176,17 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
                 public void failure() {
                     MainActivity.onRegistrationFailed();
                 }
-            }, new Callback<RegistrationOrUnlockResponse>() {
+            }, new CsCallback<RegistrationOrUnlockResponse>() {
                 @Override
                 public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                     MainActivity.onRegistrationSuccess();
                 }
 
                 @Override
-                public void failure(CsRestError error) {
+                public void failure(CsSDKError error) {
                     if (LockerUIErrorHandler.handleError(mFragmentCallback, error)) {
                         MainActivity.onRegistrationFailed();
-                        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure(error);
+                        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure((CsRestError) error);
                     }
                 }
             });

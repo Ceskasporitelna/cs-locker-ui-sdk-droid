@@ -16,9 +16,10 @@ import android.widget.FrameLayout;
 
 import csas.cz.lockerui.R;
 import cz.csas.cscore.CoreSDK;
-import cz.csas.cscore.client.rest.CallbackBasic;
 import cz.csas.cscore.client.rest.CallbackUI;
+import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.CsRestError;
+import cz.csas.cscore.client.rest.client.Response;
 import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.CsNavBarColor;
 import cz.csas.cscore.locker.LockerStatus;
@@ -502,14 +503,14 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
             if (lockType == allowedLockType.getLockType())
                 return true;
         }
-        LockerUI.getInstance().getLocker().unregister(new CallbackBasic<LockerStatus>() {
+        LockerUI.getInstance().getLocker().unregister(new CsCallback<LockerStatus>() {
             @Override
-            public void success(LockerStatus lockerStatus) {
+            public void success(LockerStatus lockerStatus, Response response) {
                 // Do nothing
             }
 
             @Override
-            public void failure() {
+            public void failure(CsSDKError error) {
                 // Do nothing
             }
         });

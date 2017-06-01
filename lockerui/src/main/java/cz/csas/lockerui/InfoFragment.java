@@ -19,7 +19,9 @@ import android.widget.TextView;
 
 import csas.cz.lockerui.R;
 import cz.csas.cscore.CoreSDK;
-import cz.csas.cscore.client.rest.CallbackBasic;
+import cz.csas.cscore.client.rest.CsCallback;
+import cz.csas.cscore.client.rest.client.Response;
+import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.LockType;
 import cz.csas.cscore.locker.LockerStatus;
 import cz.csas.cscore.locker.State;
@@ -122,14 +124,14 @@ public class InfoFragment extends Fragment {
                             .setPositiveButton(R.string.dialog_unregister_cancel_info_activity, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CallbackBasic<LockerStatus>() {
+                                    ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().unregister(new CsCallback<LockerStatus>() {
                                         @Override
-                                        public void success(LockerStatus lockerStatus) {
+                                        public void success(LockerStatus lockerStatus, Response response) {
                                             MainActivity.onUnregistrationSuccess();
                                         }
 
                                         @Override
-                                        public void failure() {
+                                        public void failure(CsSDKError error) {
 
                                         }
                                     });

@@ -23,8 +23,8 @@ import android.widget.TextView;
 
 import csas.cz.lockerui.R;
 import cz.csas.cscore.CoreSDK;
-import cz.csas.cscore.client.rest.Callback;
 import cz.csas.cscore.client.rest.CallbackBasic;
+import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
 import cz.csas.cscore.error.CsLockerError;
@@ -155,17 +155,17 @@ public class ResultFragment extends Fragment {
                     public void failure() {
                         MainActivity.onRegistrationFailed();
                     }
-                }, new Callback<RegistrationOrUnlockResponse>() {
+                }, new CsCallback<RegistrationOrUnlockResponse>() {
                     @Override
                     public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                         MainActivity.onRegistrationSuccess();
                     }
 
                     @Override
-                    public void failure(CsRestError error) {
+                    public void failure(CsSDKError error) {
                         if (LockerUIErrorHandler.handleError(mFragmentCallback, error)) {
                             if (((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback() != null)
-                                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure(error);
+                                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure((CsRestError) error);
                             MainActivity.onRegistrationFailed();
                         }
                     }
