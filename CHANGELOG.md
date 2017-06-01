@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## Changed
+
+- CoreSDK callback interface
+
 ## [1.1.2] - 2017-05-28
 
 ## Fixed
