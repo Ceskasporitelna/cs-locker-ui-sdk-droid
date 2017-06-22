@@ -20,6 +20,7 @@ public class LockerUIOptions {
     private Drawable mBackgrounImage;
     private Integer mCustomColor;
     private CsNavBarColor mCsNavBarColor;
+    private Integer mCustomNavBarColor;
     private ShowLogo mShowLogo = ShowLogo.ALWAYS;
 
     /**
@@ -42,6 +43,28 @@ public class LockerUIOptions {
         mCustomColor = customColor;
         mCsNavBarColor = csNavBarColor;
         mShowLogo = showLogo;
+    }
+
+    /**
+     * Instantiates a new Locker ui options. Allows you to customize LockerUI.
+     *
+     * @param appName           set your app name to be shown
+     * @param allowedLockTypes  set what kind of LockType you want user to decide of.
+     * @param backgroundImage    set your background image layer
+     * @param customColor       set color laye as well
+     * @param customNavBarColor set custom nav bar color
+     */
+    public LockerUIOptions(String appName, List<LockType> allowedLockTypes, Drawable backgroundImage, Integer customColor, Integer customNavBarColor, ShowLogo showLogo) {
+        if (appName == null)
+            throw new CsLockerUIError(CsLockerUIError.Kind.BAD_APP_NAME);
+        if (allowedLockTypes == null)
+            throw new CsLockerUIError(CsLockerUIError.Kind.BAD_ALLOWED_LOCK_TYPE);
+        mAppName = appName;
+        mAllowedLockTypes = allowedLockTypes;
+        mBackgrounImage = backgroundImage;
+        mCustomColor = customColor;
+        mShowLogo = showLogo;
+        mCustomNavBarColor = customNavBarColor;
     }
 
     /**
@@ -90,6 +113,15 @@ public class LockerUIOptions {
     }
 
     /**
+     * Gets custom nav bar color
+     *
+     * @return the custom nav bar color
+     */
+    public Integer getCustomNavBarColor() {
+        return mCustomNavBarColor;
+    }
+
+    /**
      * Gets show logo.
      *
      * @return the show logo
@@ -112,6 +144,8 @@ public class LockerUIOptions {
         private Integer mCustomColor;
 
         private CsNavBarColor mCsNavBarColor;
+
+        private Integer mCustomNavBarColor;
 
         private ShowLogo mShowLogo;
 
@@ -171,6 +205,18 @@ public class LockerUIOptions {
             return this;
         }
 
+        /**
+         * Sets nav bar color.
+         *
+         * @param customNavBarColor the custom nav bar color
+         * @return builder
+         */
+        public Builder setNavBarColor(int customNavBarColor) {
+            mCustomNavBarColor = customNavBarColor;
+            return this;
+        }
+
+
         public Builder setShowLogo(ShowLogo showLogo) {
             mShowLogo = showLogo;
             return this;
@@ -182,7 +228,9 @@ public class LockerUIOptions {
          * @return the locker ui options
          */
         public LockerUIOptions create() {
-            return new LockerUIOptions(mAppName, mAllowedLockTypes, mBackgrounImage, mCustomColor, mCsNavBarColor, mShowLogo);
+            return mCustomNavBarColor != null ?
+                    new LockerUIOptions(mAppName, mAllowedLockTypes, mBackgrounImage, mCustomColor, mCustomNavBarColor, mShowLogo) :
+                    new LockerUIOptions(mAppName, mAllowedLockTypes, mBackgrounImage, mCustomColor, mCsNavBarColor, mShowLogo);
         }
     }
 }

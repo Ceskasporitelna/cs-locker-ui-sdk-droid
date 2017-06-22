@@ -437,7 +437,11 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
 
     private void setNavBar() {
         CsNavBarColor csNavBarColor = mLockerUIOptions.getNavBarColor();
-        if (csNavBarColor == CsNavBarColor.WHITE) {
+        Integer customNavBarColor = mLockerUIOptions.getCustomNavBarColor();
+
+        if (customNavBarColor != null) {
+            setBackground(mToolbar, new ColorDrawable(customNavBarColor));
+        } else if (csNavBarColor == CsNavBarColor.WHITE) {
             setBackground(mToolbar, new ColorDrawable(ContextCompat.getColor(this, R.color.csasColorWhite)));
         } else {
             setBackground(mToolbar, new ColorDrawable(ContextCompat.getColor(this, R.color.csasColorNavBar)));
@@ -453,7 +457,12 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
                 mToolbar.setLogo(null);
                 break;
         }
-        mLockerUIManagerImpl.getLocker().setOAuthLoginActivityOptions(new OAuthLoginActivityOptions.Builder().setNavBarColor(csNavBarColor).setShowLogo(showLogo == ShowLogo.ALWAYS).create());
+
+        if (customNavBarColor != null) {
+            mLockerUIManagerImpl.getLocker().setOAuthLoginActivityOptions(new OAuthLoginActivityOptions.Builder().setNavBarColor(customNavBarColor).setShowLogo(showLogo == ShowLogo.ALWAYS).create());
+        } else {
+            mLockerUIManagerImpl.getLocker().setOAuthLoginActivityOptions(new OAuthLoginActivityOptions.Builder().setNavBarColor(csNavBarColor).setShowLogo(showLogo == ShowLogo.ALWAYS).create());
+        }
     }
 
     private void setNavigationIcon(Fragment fragment) {
