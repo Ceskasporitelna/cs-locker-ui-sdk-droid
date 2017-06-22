@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## Added
+- Custom navigation bar color
+
 ## [1.1.3] - 2017-06-01
 
 ## Changed

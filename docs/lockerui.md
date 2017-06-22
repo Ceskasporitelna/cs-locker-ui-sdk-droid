@@ -118,13 +118,14 @@ To customize the visuals of LockerUI, you need to create a new instance of `Lock
 	LockerUIOptions lockerUIOptions = new LockerUIOptions.Builder()
 	    .setAllowedLockTypes(lockTypes)
 	    .setAppName("appName")
-	    .setCustomColor(0xD9176017)
+	    .setCustomColor(Color.parseColor("#135091"))
 	    .setBackgroundImage(drawable)
-	    .setNavBarColor(csNavBarColor)
+	    .setNavBarColor(csNavBarColor) // use CsNavBarColor for two default colors, DEFAULT/WHITE
+	    .setNavBarColor(Color.parseColor("#135091")) // use custom navigation bar color
 	    .setShowLogo(showLogo)
 	    .create();
 	LockerUI.getInstance().initialize(context,lockerUIOptions);
 ```
 
-`CsNavBarColor` allows you to set two colors, `DEFAULT` color of Česká spořitelna a.s. and `WHITE` color.
+`CsNavBarColor` allows you to set two colors, `DEFAULT` color of Česká spořitelna a.s. and `WHITE` color. Custom navigation bar color is available as well.
 `ShowLogo` accepts three values, `ALWAYS`, `NEVER` and `EXCEPT_REGISTRATION`, which displays logo everywhere besides WebView registration screen
