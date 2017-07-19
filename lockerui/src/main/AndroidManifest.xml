@@ -13,7 +13,9 @@
             android:name="cz.csas.lockerui.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name="cz.csas.cscore.locker.OAuthLoginActivity" />
+        <activity
+            android:name="cz.csas.cscore.locker.OAuthLoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
 
     </application>
 
