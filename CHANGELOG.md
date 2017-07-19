@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.1.5] - 2017-07-19
+
 ## Fixed
 - Issue #12 ResultFragment orientation change nullcheck for viewGroup
 - Issue #9 Fragment transaction commit (allow state loss)
