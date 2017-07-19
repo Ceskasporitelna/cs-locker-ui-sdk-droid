@@ -223,7 +223,8 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
             transaction.remove(resultFragment);
         if (fingerprintFragment != null)
             transaction.remove(fingerprintFragment);
-        transaction.commit();
+        // allow state loss due to several number of crashes, see http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
+        transaction.commitAllowingStateLoss();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
     }
 
@@ -234,7 +235,8 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
         transaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out);
         transaction.replace(R.id.fragment_container_main_activity, fragment, tag);
         transaction.addToBackStack(tag);
-        transaction.commit();
+        // allow state loss due to several number of crashes, see http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
+        transaction.commitAllowingStateLoss();
     }
 
     /**
