@@ -101,11 +101,14 @@ public class ResultFragment extends Fragment {
     }
 
     private void populateViewForOrientation(LayoutInflater inflater, ViewGroup viewGroup) {
-        viewGroup.removeAllViewsInLayout();
-        View rootView = inflater.inflate(R.layout.result_fragment, viewGroup);
-        init(rootView);
-        mOrientationChanged = true;
-        setAnimation();
+        // orientation change delay due to animation clearing cause null pointer exception on viewGroup
+        if (viewGroup != null) {
+            viewGroup.removeAllViewsInLayout();
+            View rootView = inflater.inflate(R.layout.result_fragment, viewGroup);
+            init(rootView);
+            mOrientationChanged = true;
+            setAnimation();
+        }
     }
 
 
