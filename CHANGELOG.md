@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## Fixed
+- Issue #12 ResultFragment orientation change nullcheck for viewGroup
+- Issue #9 Fragment transaction commit (allow state loss)
+- OAuthActivity webview reload on configuration change
+
 ## [1.1.4] - 2017-06-22
 
 ## Added
