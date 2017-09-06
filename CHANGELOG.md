@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## Changed
+- CoreSDK version
+
 ## [1.1.5] - 2017-07-19
 
 ## Fixed
