@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import cz.csas.cscore.client.rest.CallbackUI;
+import cz.csas.cscore.client.rest.CallbackBasic;
 import cz.csas.cscore.locker.Locker;
 import cz.csas.cscore.locker.LockerRegistrationProcess;
 import cz.csas.cscore.locker.LockerStatus;
+import cz.csas.lockerui.components.CallbackUI;
 import cz.csas.lockerui.config.AuthFlowOptions;
 import cz.csas.lockerui.config.DisplayInfoOptions;
 import cz.csas.lockerui.config.LockerUIOptions;
@@ -124,6 +125,9 @@ public interface LockerUIManager {
      */
     public CallbackUI<LockerStatus> getLockerUICallback();
 
+    public void setLockerMigrationCallback(CallbackBasic<LockerStatus> mLockerMigrationCallback);
+
+    public CallbackBasic<LockerStatus> getLockerMigrationCallback();
 
     /**
      * Sets remaining attempts.

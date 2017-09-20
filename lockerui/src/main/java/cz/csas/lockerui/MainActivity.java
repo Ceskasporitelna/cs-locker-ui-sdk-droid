@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 
 import csas.cz.lockerui.R;
 import cz.csas.cscore.CoreSDK;
-import cz.csas.cscore.client.rest.CallbackUI;
 import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
@@ -31,6 +30,7 @@ import cz.csas.cscore.logger.LogLevel;
 import cz.csas.cscore.logger.LogManager;
 import cz.csas.cscore.utils.StringUtils;
 import cz.csas.cscore.utils.csjson.CsJson;
+import cz.csas.lockerui.components.CallbackUI;
 import cz.csas.lockerui.config.LockType;
 import cz.csas.lockerui.config.LockerUIOptions;
 import cz.csas.lockerui.config.ShowLogo;
@@ -102,7 +102,11 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
             if (isUnregistered) {
                 mLockerUIManagerImpl.setWaitingForResult(true);
             }
-            if (getIntent().hasExtra(Constants.AUTH_FLOW_EXTRA) || forceAuthFlow) {
+            if (getIntent().hasExtra(Constants.MIGRATION_EXTRA)) {
+                FingerprintFragment fingerprintFragment = new FingerprintFragment();
+                fingerprintFragment.setArguments(getIntent().getExtras());
+                changeFragment(fingerprintFragment, Constants.FRAGMENT_FINGERPRINT);
+            } else if (getIntent().hasExtra(Constants.AUTH_FLOW_EXTRA) || forceAuthFlow) {
                 LockerUIFragment lockerUIFragment = new LockerUIFragment();
                 changeFragment(lockerUIFragment, Constants.FRAGMENT_LOCKERUI);
             } else if (getIntent().hasExtra(Constants.DISPLAY_INFO_EXTRA)) {

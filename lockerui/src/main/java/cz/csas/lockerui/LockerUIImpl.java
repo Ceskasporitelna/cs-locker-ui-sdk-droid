@@ -6,21 +6,28 @@ import android.content.Intent;
 
 import cz.csas.cscore.CoreSDK;
 import cz.csas.cscore.client.rest.CallbackBasic;
-import cz.csas.cscore.client.rest.CallbackUI;
 import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.client.Response;
 import cz.csas.cscore.error.CsSDKError;
+import cz.csas.cscore.locker.LockType;
 import cz.csas.cscore.locker.Locker;
+import cz.csas.cscore.locker.LockerMigrationData;
 import cz.csas.cscore.locker.LockerStatus;
+import cz.csas.cscore.locker.Password;
+import cz.csas.cscore.locker.PasswordHashProcess;
+import cz.csas.cscore.locker.RegistrationOrUnlockResponse;
 import cz.csas.cscore.locker.State;
 import cz.csas.cscore.logger.LogLevel;
 import cz.csas.cscore.logger.LogManager;
 import cz.csas.cscore.utils.StringUtils;
 import cz.csas.cscore.utils.csjson.CsJson;
+import cz.csas.lockerui.components.CallbackUI;
 import cz.csas.lockerui.config.AuthFlowOptions;
 import cz.csas.lockerui.config.DisplayInfoOptions;
 import cz.csas.lockerui.config.LockerUIOptions;
+import cz.csas.lockerui.config.MigrationFlowOptions;
 import cz.csas.lockerui.error.CsLockerUIError;
+
 
 /**
  * The type Locker ui.
@@ -70,6 +77,45 @@ class LockerUIImpl extends LockerUI {
         intent.putExtra(Constants.AUTH_FLOW_EXTRA, true);
         mContext.startActivity(intent);
         mLogManager.log(StringUtils.logLine(LOCKER_UI_MODULE, "AuthFlowStarted", "Start authentication flow with the following options:" + mCsJson.toJson(authFlowOptions)), LogLevel.DEBUG);
+    }
+
+    @Override
+    public void startMigrationFlow(MigrationFlowOptions options, final CallbackUI<LockerStatus> callback) {
+        if (validateMigrationFlowOptions(options)) {
+            final LockerMigrationData data = new LockerMigrationData.Builder()
+                    .setClientId(options.getClientId())
+                    .setDeviceFingerprint(options.getDeviceFingerprint())
+                    .setOneTimePasswordKey(options.getOneTimePasswordKey())
+                    .setRefreshToken(options.getRefreshToken())
+                    .setEncryptionKey(options.getEncryptionKey())
+                    .create();
+            final Password password = options.getPassword();
+            final PasswordHashProcess process = options.getPasswordHashProcess();
+
+            if (password.getLockType() == LockType.FINGERPRINT) {
+                // initiate UI
+                mLockerUIManager.setWaitingForResult(false);
+                mLockerUIManager.setLockerMigrationCallback(new CallbackBasic<LockerStatus>() {
+                    @Override
+                    public void success(LockerStatus lockerStatus) {
+                        callMigrationUnlock(password, process, data, callback);
+                    }
+
+                    @Override
+                    public void failure() {
+                        callback.failure(new CsLockerUIError(CsLockerUIError.Kind.MIGRATION_REJECTED));
+                    }
+                });
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra(Constants.MIGRATION_EXTRA, true);
+                intent.putExtra(Constants.MIGRATION_FINGERPRINT_EXTRA, password.getPassword());
+                mContext.startActivity(intent);
+            } else {
+                callMigrationUnlock(password, process, data, callback);
+            }
+        } else {
+            callback.failure(new CsLockerUIError(CsLockerUIError.Kind.BAD_MIGRATION_DATA));
+        }
     }
 
     @Override
@@ -156,4 +202,39 @@ class LockerUIImpl extends LockerUI {
         getLocker().cancelOAuthLoginActivity();
     }
 
+    private void callMigrationUnlock(Password password, PasswordHashProcess process, LockerMigrationData data, final CallbackUI<LockerStatus> callback) {
+        getLocker().unlockAfterMigration(password, process, data, new CsCallback<RegistrationOrUnlockResponse>() {
+            @Override
+            public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
+                callback.success(LockerUI.getInstance().getLocker().getStatus());
+            }
+
+            @Override
+            public void failure(CsSDKError error) {
+                callback.failure(error);
+            }
+        });
+    }
+
+    private boolean validateMigrationFlowOptions(MigrationFlowOptions options) {
+        // password hash process is optional, set tu dummy process if not provided
+        if (options.getPasswordHashProcess() == null)
+            options.setPasswordHashProcess(new PasswordHashProcess() {
+                @Override
+                public String hashPassword(String password) {
+                    return password;
+                }
+            });
+        Password password = options.getPassword();
+        return password != null &&
+                password.getLockType() != null &&
+                password.getPassword() != null &&
+                // for PIN and GESTURE check password space size value
+                (!(password.getLockType() == LockType.PIN || password.getLockType() == LockType.GESTURE) || password.getPasswordSpaceSize() != null) &&
+                options.getClientId() != null &&
+                options.getDeviceFingerprint() != null &&
+                options.getOneTimePasswordKey() != null &&
+                options.getEncryptionKey() != null &&
+                options.getRefreshToken() != null;
+    }
 }

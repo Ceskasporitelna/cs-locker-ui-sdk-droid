@@ -51,9 +51,19 @@ public class CsLockerUIError extends CsSDKError {
         BAD_PIN_LENGTH("PinLength cannot be null and its length has to be less than 9 and more than 3"),
 
         /**
+         * Bad migration data
+         */
+        BAD_MIGRATION_DATA("Some of the mandatory migration fields are not provided"),
+
+        /**
          * The Bad context.
          */
-        BAD_CONTEXT("Context cannot be null");
+        BAD_CONTEXT("Context cannot be null"),
+
+        /**
+         * Migration rejected
+         */
+        MIGRATION_REJECTED("Migration unlock with fingerprint was rejected without verification.");
 
         private String detailedMessage;
 

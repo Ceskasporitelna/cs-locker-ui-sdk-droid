@@ -66,6 +66,10 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
     private String mOldFingerprintHash;
     private boolean mFingerprintFailedFlag = false;
 
+    // migration parameters
+    private String mMigrationFingerprintHash;
+    private boolean mMigrationSuccessful = false;
+
     @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
@@ -79,14 +83,23 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
         RelativeLayout group = new RelativeLayout(getActivity());
         populateViewForOrientation(inflater, group);
 
+        Bundle arguments = getArguments();
+
+        // migration fingerprint hash
+        if (arguments != null && arguments.containsKey(Constants.MIGRATION_FINGERPRINT_EXTRA))
+            mMigrationFingerprintHash = arguments.getString(Constants.MIGRATION_FINGERPRINT_EXTRA);
+
         mFingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
         // this permission condition should be always true
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED &&
                 mFingerprintManager.hasEnrolledFingerprints()) {
-            mFingerprintHelper = new FingerprintHelper(mFingerprintManager, this, getActivity());
-            if (mFingerprintHelper.initCipher())
-                setCheckingScreen();
-            else
+            mFingerprintHelper = new FingerprintHelper(mFingerprintManager, mMigrationFingerprintHash, this, getActivity());
+            if (mFingerprintHelper.initCipher()) {
+                if (mMigrationFingerprintHash != null)
+                    setMigrationScreen();
+                else
+                    setCheckingScreen();
+            } else
                 setAgainScreen(null);
         } else {
             if (mState == State.USER_UNREGISTERED) {
@@ -214,6 +227,14 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
     @Override
     public void onPause() {
         super.onPause();
+        if (mMigrationFingerprintHash != null) {
+            CallbackBasic<LockerStatus> callback = ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerMigrationCallback();
+            if (mMigrationSuccessful) {
+                callback.success(LockerUI.getInstance().getLocker().getStatus());
+            } else {
+                callback.failure();
+            }
+        }
         if (mFingerprintHelper != null)
             mFingerprintHelper.stopListening();
     }
@@ -221,7 +242,10 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
 
     @Override
     public void onAuthenticated(String fingerprintHash) {
-        if (mState == State.USER_UNREGISTERED)
+        if (mMigrationFingerprintHash != null) {
+            mMigrationSuccessful = true;
+            getActivity().onBackPressed();
+        } else if (mState == State.USER_UNREGISTERED)
             checkRegisterFingerprintResult(fingerprintHash);
         else if (mState == State.USER_LOCKED)
             checkUnlockFingerprintResult(fingerprintHash);
@@ -338,7 +362,10 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
     }
 
     private void startAuthentiation() {
-        setCheckingScreen();
+        if (mMigrationFingerprintHash != null)
+            setMigrationScreen();
+        else
+            setCheckingScreen();
         mFingerprintHelper.startListening();
     }
 
@@ -358,10 +385,20 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
                 R.string.description_failed_fingerprint_fragment,
                 R.string.btn_fingerprint_repeat,
                 View.VISIBLE,
-                View.VISIBLE,
+                mMigrationFingerprintHash != null ? View.INVISIBLE : View.VISIBLE,
                 View.VISIBLE,
                 msg);
         mTvTitle.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
+    }
+
+    private void setMigrationScreen() {
+        setUiComponents(R.string.title_fingerprint_fragment,
+                R.string.description_migration_fingerprint_fragment,
+                null,
+                View.INVISIBLE,
+                View.INVISIBLE,
+                View.INVISIBLE,
+                null);
     }
 
     private void setButtonVisibility(int visibilityButtonOther, int visibilityButtonNewReg) {

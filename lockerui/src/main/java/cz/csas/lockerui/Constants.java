@@ -48,6 +48,10 @@ class Constants {
      */
     public static final String AUTH_FLOW_EXTRA = "auth_extra";
 
+    public static final String MIGRATION_EXTRA = "migration_extra";
+
+    public static final String MIGRATION_FINGERPRINT_EXTRA = "migration_fingerprint_extra";
+
     /**
      * The constant DISPLAY_INFO_EXTRA.
      */

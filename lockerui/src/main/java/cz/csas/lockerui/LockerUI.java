@@ -3,12 +3,13 @@ package cz.csas.lockerui;
 import android.content.Context;
 
 import cz.csas.cscore.client.rest.CallbackBasic;
-import cz.csas.cscore.client.rest.CallbackUI;
 import cz.csas.cscore.locker.Locker;
 import cz.csas.cscore.locker.LockerStatus;
+import cz.csas.lockerui.components.CallbackUI;
 import cz.csas.lockerui.config.AuthFlowOptions;
 import cz.csas.lockerui.config.DisplayInfoOptions;
 import cz.csas.lockerui.config.LockerUIOptions;
+import cz.csas.lockerui.config.MigrationFlowOptions;
 
 /**
  * The interface Locker ui.
@@ -80,6 +81,24 @@ public abstract class LockerUI {
      * @param callback        the callback
      */
     public abstract void startAuthenticationFlow(AuthFlowOptions authFlowOptions, CallbackUI<LockerStatus> callback);
+
+    /**
+     * Start migration flow. This method will handle unlock for unregistered users if all the
+     * necessary data are provided. It is meant to be used for migration from custom Locker
+     * implementation to Locker v1.
+     * Necessary data to be provided:
+     * - Password (m) (including password, lock type and password space size for PIN and GESTURE)
+     * - PasswordHashProcess (o) (to let Locker SDK be available to reproduce your password hash if you use some)
+     * - Client ID (m) (received during registration)
+     * - Device Fingerprint (m) (especially for Android devices,where all device fingerprints don't have to be equal)
+     * - OneTimePasswordKey (m) (received during registration)
+     * - RefreshToken (m) (received during registration)
+     * - EncryptionKey (m) (received during registration, used to encrypt refresh token)
+     *
+     * @param migrationFlowOptions the options for migration flow
+     * @param callback             the callback with migration flow result
+     */
+    public abstract void startMigrationFlow(MigrationFlowOptions migrationFlowOptions, CallbackUI<LockerStatus> callback);
 
     /**
      * Change password. allows you to open change password flow immediately. You will receive LockerStatus

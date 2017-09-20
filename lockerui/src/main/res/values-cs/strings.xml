@@ -27,6 +27,7 @@
     <string name="description_failure_gesture_fragment">Gesta se neshodují. Zadejte prosím nové gesto.</string>
     <string name="description_failed_fingerprint_fragment">Bohužel nebylo možné ověřit Vaši identitu pomocí otisku prstu.</string>
     <string name="description_in_progress_fingerprint_fragment">Použijte otisk prstu pro odemknutí.</string>
+    <string name="description_migration_fingerprint_fragment">Použijte otisk prstu pro zvýšení zabezpečení aplikace.</string>
     <string name="description_set_fingerprint_fragment">Pro použití otisku prstu musíte nastavit svůj otisk prstu v nastavení Vašeho telefonu.</string>
     <string name="description_deleted_fingerprint_fragment">Z vašeho telefonu byl smazán otisk prstu použitý pro registraci. Z bezpečnostních důvodů byla vaše registrace zrušena.</string>
     <string name="title_fingerprint_fragment">Otisk prstu</string>

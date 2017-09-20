@@ -5,10 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 
-import cz.csas.cscore.client.rest.CallbackUI;
+import cz.csas.cscore.client.rest.CallbackBasic;
 import cz.csas.cscore.locker.Locker;
 import cz.csas.cscore.locker.LockerRegistrationProcess;
 import cz.csas.cscore.locker.LockerStatus;
+import cz.csas.lockerui.components.CallbackUI;
 import cz.csas.lockerui.config.AuthFlowOptions;
 import cz.csas.lockerui.config.DisplayInfoOptions;
 import cz.csas.lockerui.config.LockerUIOptions;
@@ -37,6 +38,7 @@ class LockerUIManagerImpl implements LockerUIManager {
     private Locker mLocker;
     private LockerRegistrationProcess mLockerRegistrationProcess;
     private CallbackUI<LockerStatus> mLockerUICallback;
+    private CallbackBasic<LockerStatus> mLockerMigrationCallback;
     private Integer mUnlockRemainingAttempts;
     private boolean mChangingPassword;
     private String mPassword;
@@ -115,6 +117,14 @@ class LockerUIManagerImpl implements LockerUIManager {
     @Override
     public CallbackUI<LockerStatus> getLockerUICallback() {
         return mLockerUICallback;
+    }
+
+    public CallbackBasic<LockerStatus> getLockerMigrationCallback() {
+        return mLockerMigrationCallback;
+    }
+
+    public void setLockerMigrationCallback(CallbackBasic<LockerStatus> mLockerMigrationCallback) {
+        this.mLockerMigrationCallback = mLockerMigrationCallback;
     }
 
     @Override

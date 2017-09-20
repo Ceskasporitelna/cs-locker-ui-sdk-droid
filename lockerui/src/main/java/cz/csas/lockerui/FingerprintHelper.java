@@ -59,19 +59,23 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
     private KeyGenerator mKeyGenerator;
     private Cipher mCipher;
     private CryptoManager mCryptoManager;
+    private String mMigrationFingerprintHash;
 
 
     /**
      * Instantiates a new Fingerprint helper.
      *
-     * @param fingerprintManager the fingerprint manager
-     * @param callback           the callback
+     * @param fingerprintManager       the fingerprint manager
+     * @param migrationFingerprintHash the migration fingerprint hash
+     * @param callback                 the callback
+     * @param activity                 the activity
      */
-    public FingerprintHelper(FingerprintManager fingerprintManager, Callback callback, Activity activity) {
+    public FingerprintHelper(FingerprintManager fingerprintManager, String migrationFingerprintHash, Callback callback, Activity activity) {
         mFingerprintManager = fingerprintManager;
         mActivity = activity;
         mCallback = callback;
         mCryptoManager = new CryptoManagerImpl();
+        mMigrationFingerprintHash = migrationFingerprintHash;
     }
 
     /**
@@ -132,7 +136,7 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         String fingerprintHash;
         if (LockerUI.getInstance().getLocker().retrieveIvSecret() == null) {
-            fingerprintHash = mCryptoManager.generateRandomString();
+            fingerprintHash = getFingerprintHash();
             LockerUI.getInstance().getLocker().storeEncryptedSecret(encryptWithFingerprintKey(fingerprintHash));
             LockerUI.getInstance().getLocker().storeIvSecret(mCryptoManager.encodeBase64(mCipher.getIV()));
         } else
@@ -171,8 +175,8 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
                 | NoSuchProviderException | NoSuchPaddingException e) {
             e.printStackTrace();
             mCallback.onError(INIT_CIPHER_ERROR_KEY, "Z důvodu bezpečnosti nelze provést ověření.");
+            return false;
         }
-        return false;
     }
 
     private KeyStore providesKeystore() throws KeyStoreException {
@@ -221,6 +225,12 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
             }
         }
         return null;
+    }
+
+    private String getFingerprintHash() {
+        if (mMigrationFingerprintHash != null)
+            return mMigrationFingerprintHash;
+        return mCryptoManager.generateRandomString();
     }
 
     /**

@@ -27,6 +27,7 @@
     <string name="description_failure_gesture_fragment">Gestures does not match, please try it again.</string>
     <string name="description_failed_fingerprint_fragment">Unfortunately, it was not possible to verify your identity using your fingerprint.</string>
     <string name="description_in_progress_fingerprint_fragment">Fingerprint verification in progress, please wait.</string>
+    <string name="description_migration_fingerprint_fragment">Fingerprint verification needed due to security reasons.</string>
     <string name="description_set_fingerprint_fragment">No fingerprint found in your device. You have to set your fingerprint security in the device settings first.</string>
     <string name="description_deleted_fingerprint_fragment">You were unregistered due to fingerprint settings changes.</string>
     <string name="title_fingerprint_fragment">Fingerprint</string>
