@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## Fixed
+- Locker ui activity settings and theme
+
 ## [2.0.0] - 2017-09-20
 
 ## Added
