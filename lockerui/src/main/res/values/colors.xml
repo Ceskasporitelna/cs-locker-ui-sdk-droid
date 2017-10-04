@@ -11,6 +11,8 @@
     <color name="csasColorRedDark">#B31112</color>
     <color name="csasColorAccent">#FF4081</color>
     <color name="csasCardBackground">#ffffff</color>
+    <color name="csasColorWhite">#ffffff</color>
+    <color name="csasColorNavBar">#C6DBF3</color>
     <color name="csasCardShadow">#10000000</color>
     <color name="csasLiteBlue">#ff359ff2</color>
     <color name="csasWindowBackground">#00000000</color>
