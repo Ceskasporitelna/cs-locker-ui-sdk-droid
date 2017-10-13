@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## Fixed
+- Added safety check to getting lock type in MainActivity 
+
 ## [2.0.2] - 2017-10-04
 
 ## Changed
