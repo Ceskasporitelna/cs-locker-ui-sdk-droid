@@ -21,6 +21,7 @@ import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
 import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.CsNavBarColor;
+import cz.csas.cscore.locker.Locker;
 import cz.csas.cscore.locker.LockerStatus;
 import cz.csas.cscore.locker.OAuthLoginActivityOptions;
 import cz.csas.cscore.locker.PasswordResponse;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
         sActivity = this;
         mLogManager = CoreSDK.getInstance().getLogger();
 
-        final cz.csas.cscore.locker.LockType lockType = LockerUI.getInstance().getLocker().getStatus().getLockType();
+        final cz.csas.cscore.locker.LockType lockType = getLockTypeSafe();
         mLockerUIManagerImpl = (LockerUIManagerImpl) ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager();
         mLockerUIManagerImpl.setCurrentLockerUIActivity(this);
         mLockerUIOptions = mLockerUIManagerImpl.getLockerUIOptions();
@@ -83,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
 
         boolean forceAuthFlow = lockType != null && !unregisterIfLockTypeNotValid(lockType);
 
-        LockerStatus status = LockerUI.getInstance().getLocker().getStatus();
-        mLockType = status.getLockType();
+        mLockType = getLockTypeSafe();
         setCustomizedBackground();
         setNavBar();
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
          * onActivityResult() and it created the inifinite loop of opening OAuth2 webview.
          *
          */
-        boolean isUnregistered = status.getState() == State.USER_UNREGISTERED;
+        boolean isUnregistered = checkIsUnregisteredSafe();
         if (!isUnregistered || !mLockerUIManagerImpl.isWaitingForResult()) {
             if (isUnregistered) {
                 mLockerUIManagerImpl.setWaitingForResult(true);
@@ -530,5 +530,31 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
             }
         });
         return false;
+    }
+
+
+    // These getters were used because of causing unreproducable error (quite frequent)
+    private cz.csas.cscore.locker.LockType getLockTypeSafe() {
+        LockerStatus status = getLockerStatusSafe();
+        if (status != null)
+            return status.getLockType();
+        return null;
+    }
+
+    // These getters were used because of causing unreproducable error (quite frequent)
+    private LockerStatus getLockerStatusSafe() {
+        LockerUI lockerUI = LockerUI.getInstance();
+        if (lockerUI != null) {
+            Locker locker = lockerUI.getLocker();
+            if (locker != null)
+                return locker.getStatus();
+        }
+        return null;
+    }
+
+    // These getters were used because of causing unreproducable error (quite frequent)
+    private boolean checkIsUnregisteredSafe() {
+        LockerStatus status = getLockerStatusSafe();
+        return status != null && status.getState() == State.USER_UNREGISTERED;
     }
 }
