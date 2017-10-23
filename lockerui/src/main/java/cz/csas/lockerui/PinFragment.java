@@ -289,7 +289,7 @@ public class PinFragment extends Fragment implements View.OnClickListener {
 
     private void checkRegistrationPinResult() {
         if (mCode != null && mRepeatCode != null && mCode.equals(mRepeatCode)) {
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerRegistrationProcess().finishRegistration(new Password(cz.csas.cscore.locker.LockType.PIN, mCode, mCode.length()));
+            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerRegistrationProcess().finishRegistration(new Password(cz.csas.cscore.locker.LockType.PIN, mCode, new Integer[]{mCode.length()}));
             mFragmentCallback.changeFragmentToResult();
         } else {
             mTvTitle.setText(R.string.new_pin_register_pin_activity);
@@ -369,7 +369,7 @@ public class PinFragment extends Fragment implements View.OnClickListener {
         ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setPassword(null);
 
         if (mCode != null && mRepeatCode != null && mCode.equals(mRepeatCode)) {
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldCode, new Password(cz.csas.cscore.locker.LockType.PIN, mCode, mCode.length()), new CsCallback<PasswordResponse>() {
+            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLocker().changePassword(mOldCode, new Password(cz.csas.cscore.locker.LockType.PIN, mCode, new Integer[]{mCode.length()}), new CsCallback<PasswordResponse>() {
                         @Override
                         public void success(PasswordResponse passwordResponse, Response response) {
                             MainActivity.onPasswordChangeSuccess(passwordResponse, cz.csas.cscore.locker.LockType.PIN);

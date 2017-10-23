@@ -10,32 +10,42 @@ import cz.csas.lockerui.error.CsLockerUIError;
  */
 public class GestureLock implements LockType {
 
+    private final int MIN_GESTURE_LENGTH = 4;
     private final cz.csas.cscore.locker.LockType LOCK_TYPE_GESTURE = cz.csas.cscore.locker.LockType.GESTURE;
-    private Integer mGridSize;
     private Integer mMinGestureLength;
+    private GestureGridSize mGestureGridSize;
 
     /**
      * Instantiates a new Gesture lock.
      *
-     * @param gridSize         the grid size
      * @param minGestureLength the min gesture length
      */
-    public GestureLock(Integer gridSize, Integer minGestureLength) {
-        if (gridSize == null || gridSize < 3 || gridSize > 5)
+    public GestureLock(GestureGridSize gestureGridSize, Integer minGestureLength) {
+        if (gestureGridSize == null)
             throw new CsLockerUIError(CsLockerUIError.Kind.BAD_GRID_SIZE);
-        mGridSize = gridSize;
-        if (minGestureLength == null || minGestureLength < 4)
+        if (minGestureLength == null || minGestureLength < MIN_GESTURE_LENGTH)
             throw new CsLockerUIError(CsLockerUIError.Kind.BAD_MIN_GESTURE_LENGTH);
+        mGestureGridSize = gestureGridSize;
         mMinGestureLength = minGestureLength;
     }
 
     /**
-     * Gets grid size.
+     * Gets row grid size.
      *
-     * @return the grid size
+     * @return the row grid size
      */
-    public int getGridSize() {
-        return mGridSize;
+    public int getGridSizeRow() {
+        return mGestureGridSize.getRows();
+    }
+
+
+    /**
+     * Gets row grid size.
+     *
+     * @return the row grid size
+     */
+    public int getGridSizeColumn() {
+        return mGestureGridSize.getColumns();
     }
 
     /**

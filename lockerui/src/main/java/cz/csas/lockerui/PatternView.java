@@ -42,9 +42,13 @@ import cz.csas.lockerui.utils.ColorUtils;
 public class PatternView extends View {
 
     /**
-     * The width and height of the matrix.
+     * The width of the matrix.
      */
-    private int gridSize;
+    private int gridSizeRow;
+    /**
+     * The height of the matrix.
+     */
+    private int gridSizeColumn;
     /**
      * The maximum size when it is used wrap content.
      */
@@ -161,8 +165,10 @@ public class PatternView extends View {
         getFromAttributes(context, attrs);
         List<LockType> lockTypes = ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUIOptions().getAllowedLockTypes();
         for (LockType lockType : lockTypes) {
-            if (lockType.getClass().equals(GestureLock.class))
-                gridSize = ((GestureLock) lockType).getGridSize();
+            if (lockType.getClass().equals(GestureLock.class)) {
+                gridSizeRow = ((GestureLock) lockType).getGridSizeRow();
+                gridSizeColumn = ((GestureLock) lockType).getGridSizeColumn();
+            }
         }
         color = ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getMainColor();
         init();
@@ -187,7 +193,7 @@ public class PatternView extends View {
     }
 
     private void init() {
-        cellManager = new CellManager(gridSize, gridSize);
+        cellManager = new CellManager(gridSizeRow, gridSizeColumn);
         final int matrixSize = cellManager.getSize();
         mPattern = new ArrayList<>(matrixSize);
     }
@@ -197,8 +203,8 @@ public class PatternView extends View {
      *
      * @return the grid size
      */
-    public int getGridSize() {
-        return gridSize;
+    public Integer[] getGridSize() {
+        return new Integer[]{gridSizeRow, gridSizeColumn};
     }
 
     /**
@@ -490,8 +496,8 @@ public class PatternView extends View {
      * Clear the pattern lookup table.
      */
     private void clearPatternDrawLookup() {
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
+        for (int i = 0; i < gridSizeRow; i++) {
+            for (int j = 0; j < gridSizeColumn; j++) {
                 cellManager.clearDrawing();
             }
         }
@@ -514,6 +520,9 @@ public class PatternView extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        // scaling factor
+        int gridSize = gridSizeColumn > gridSizeRow ? gridSizeColumn : gridSizeRow;
+
         int mPaddingRight = padding;
         final int width = w - paddingLeft - mPaddingRight;
         squareWidth = width / (float) gridSize;
@@ -528,7 +537,7 @@ public class PatternView extends View {
         // View should be large enough to contain MATRIX_WIDTH side-by-side
         // target
         // bitmaps
-        return gridSize * bitmapWidth;
+        return gridSizeColumn * bitmapWidth;
     }
 
     @Override
@@ -536,7 +545,7 @@ public class PatternView extends View {
         // View should be large enough to contain MATRIX_WIDTH side-by-side
         // target
         // bitmaps
-        return gridSize * bitmapWidth;
+        return gridSizeRow * bitmapWidth;
     }
 
     @Override
@@ -643,7 +652,7 @@ public class PatternView extends View {
         float hitSize = squareHeight * hitFactor;
 
         float offset = paddingTop + (squareHeight - hitSize) / 2f;
-        for (int i = 0; i < gridSize; i++) {
+        for (int i = 0; i < gridSizeRow; i++) {
 
             final float hitTop = offset + squareHeight * i;
             if (y >= hitTop && y <= hitTop + hitSize) {
@@ -664,7 +673,7 @@ public class PatternView extends View {
         float hitSize = squareWidth * hitFactor;
 
         float offset = paddingLeft + (squareWidth - hitSize) / 2f;
-        for (int i = 0; i < gridSize; i++) {
+        for (int i = 0; i < gridSizeColumn; i++) {
 
             final float hitLeft = offset + squareWidth * i;
             if (x >= hitLeft && x <= hitLeft + hitSize) {
@@ -968,10 +977,20 @@ public class PatternView extends View {
         final int paddingTop = this.paddingTop;
         final int paddingLeft = this.paddingLeft;
 
-        for (int i = 0; i < gridSize; i++) {
-            float topY = paddingTop + i * squareHeight;
-            for (int j = 0; j < gridSize; j++) {
-                float leftX = paddingLeft + j * squareWidth;
+        // set margin for asymetric gesture grid
+        float marginTop = 0;
+        float marginLeft = 0;
+
+        int gridDif = gridSizeRow - gridSizeColumn;
+        if (gridDif > 0)
+            marginLeft = gridDif * squareWidth * 0.5f;
+        else if (gridDif < 0)
+            marginTop = -gridDif * squareHeight * 0.5f;
+
+        for (int i = 0; i < gridSizeRow; i++) {
+            float topY = paddingTop + i * squareHeight + marginTop;
+            for (int j = 0; j < gridSizeColumn; j++) {
+                float leftX = paddingLeft + j * squareWidth + marginLeft;
                 drawCircle(canvas, (int) leftX, (int) topY, cellManager.isDrawn(i, j));
             }
         }
