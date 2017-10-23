@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## Added 
+- Add non-symmetric gesture grid compatibility
+
 ## [2.0.3] - 2017-10-13
 
 ## Fixed
