@@ -132,6 +132,8 @@ public class PatternView extends View {
     private final int paddingLeft = padding;
     private final int paddingTop = padding;
 
+    private float marginTop = 0;
+    private float marginLeft = 0;
 
     /**
      * Instantiates a new Pattern view.
@@ -530,6 +532,13 @@ public class PatternView extends View {
         int mPaddingBottom = padding;
         final int height = h - paddingTop - mPaddingBottom;
         squareHeight = height / (float) gridSize;
+
+        // set margin for asymmetric gesture grid
+        int gridDif = gridSizeRow - gridSizeColumn;
+        if (gridDif > 0)
+            marginLeft = gridDif * squareWidth * 0.5f;
+        else if (gridDif < 0)
+            marginTop = -gridDif * squareHeight * 0.5f;
     }
 
     @Override
@@ -647,11 +656,10 @@ public class PatternView extends View {
      * @return The row that y falls in, or -1 if it falls in no row.
      */
     private int getRowHit(float y) {
-
         final float squareHeight = this.squareHeight;
         float hitSize = squareHeight * hitFactor;
 
-        float offset = paddingTop + (squareHeight - hitSize) / 2f;
+        float offset = paddingTop + marginTop + (squareHeight - hitSize) / 2f;
         for (int i = 0; i < gridSizeRow; i++) {
 
             final float hitTop = offset + squareHeight * i;
@@ -671,8 +679,7 @@ public class PatternView extends View {
     private int getColumnHit(float x) {
         final float squareWidth = this.squareWidth;
         float hitSize = squareWidth * hitFactor;
-
-        float offset = paddingLeft + (squareWidth - hitSize) / 2f;
+        float offset = paddingLeft + marginLeft + (squareWidth - hitSize) / 2f;
         for (int i = 0; i < gridSizeColumn; i++) {
 
             final float hitLeft = offset + squareWidth * i;
@@ -917,11 +924,11 @@ public class PatternView extends View {
     }
 
     private float getCenterXForColumn(int column) {
-        return paddingLeft + column * squareWidth + squareWidth / 2f;
+        return paddingLeft + column * squareWidth + marginLeft + squareWidth / 2f;
     }
 
     private float getCenterYForRow(int row) {
-        return paddingTop + row * squareHeight + squareHeight / 2f;
+        return paddingTop + row * squareHeight + marginTop + squareHeight / 2f;
     }
 
     @Override
@@ -976,16 +983,6 @@ public class PatternView extends View {
         // draw the circles
         final int paddingTop = this.paddingTop;
         final int paddingLeft = this.paddingLeft;
-
-        // set margin for asymetric gesture grid
-        float marginTop = 0;
-        float marginLeft = 0;
-
-        int gridDif = gridSizeRow - gridSizeColumn;
-        if (gridDif > 0)
-            marginLeft = gridDif * squareWidth * 0.5f;
-        else if (gridDif < 0)
-            marginTop = -gridDif * squareHeight * 0.5f;
 
         for (int i = 0; i < gridSizeRow; i++) {
             float topY = paddingTop + i * squareHeight + marginTop;
