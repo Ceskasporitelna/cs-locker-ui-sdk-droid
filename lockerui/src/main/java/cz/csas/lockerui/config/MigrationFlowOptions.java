@@ -1,7 +1,7 @@
 package cz.csas.lockerui.config;
 
 import cz.csas.cscore.locker.Password;
-import cz.csas.cscore.locker.PasswordHashProcess;
+import cz.csas.cscore.locker.PasswordMigrationProcess;
 
 /**
  * @author Jan Hauser <jan.hauser@applifting.cz>
@@ -10,16 +10,16 @@ import cz.csas.cscore.locker.PasswordHashProcess;
 public class MigrationFlowOptions {
 
     private Password password;
-    private PasswordHashProcess passwordHashProcess;
+    private PasswordMigrationProcess passwordMigrationProcess;
     private String clientId;
     private String deviceFingerprint;
     private String encryptionKey;
     private String oneTimePasswordKey;
     private String refreshToken;
 
-    public MigrationFlowOptions(Password password, PasswordHashProcess passwordHashProcess, String clientId, String deviceFingerprint, String encryptionKey, String oneTimePasswordKey, String refreshToken) {
+    public MigrationFlowOptions(Password password, PasswordMigrationProcess passwordMigrationProcess, String clientId, String deviceFingerprint, String encryptionKey, String oneTimePasswordKey, String refreshToken) {
         this.password = password;
-        this.passwordHashProcess = passwordHashProcess;
+        this.passwordMigrationProcess = passwordMigrationProcess;
         this.clientId = clientId;
         this.deviceFingerprint = deviceFingerprint;
         this.encryptionKey = encryptionKey;
@@ -29,7 +29,7 @@ public class MigrationFlowOptions {
 
     public MigrationFlowOptions(Builder builder) {
         this.password = builder.password;
-        this.passwordHashProcess = builder.passwordHashProcess;
+        this.passwordMigrationProcess = builder.passwordMigrationProcess;
         this.clientId = builder.clientId;
         this.deviceFingerprint = builder.deviceFingerprint;
         this.encryptionKey = builder.encryptionKey;
@@ -45,12 +45,12 @@ public class MigrationFlowOptions {
         this.password = password;
     }
 
-    public PasswordHashProcess getPasswordHashProcess() {
-        return passwordHashProcess;
+    public PasswordMigrationProcess getPasswordMigrationProcess() {
+        return passwordMigrationProcess;
     }
 
-    public void setPasswordHashProcess(PasswordHashProcess passwordHashProcess) {
-        this.passwordHashProcess = passwordHashProcess;
+    public void setPasswordMigrationProcess(PasswordMigrationProcess passwordMigrationProcess) {
+        this.passwordMigrationProcess = passwordMigrationProcess;
     }
 
     public String getClientId() {
@@ -96,7 +96,7 @@ public class MigrationFlowOptions {
     public static class Builder {
 
         private Password password;
-        private PasswordHashProcess passwordHashProcess;
+        private PasswordMigrationProcess passwordMigrationProcess;
         private String clientId;
         private String deviceFingerprint;
         private String encryptionKey;
@@ -108,8 +108,8 @@ public class MigrationFlowOptions {
             return this;
         }
 
-        public Builder setPasswordHashProcess(PasswordHashProcess passwordHashProcess) {
-            this.passwordHashProcess = passwordHashProcess;
+        public Builder setPasswordMigrationProcess(PasswordMigrationProcess passwordMigrationProcess) {
+            this.passwordMigrationProcess = passwordMigrationProcess;
             return this;
         }
 

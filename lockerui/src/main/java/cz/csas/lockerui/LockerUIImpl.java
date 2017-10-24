@@ -14,7 +14,7 @@ import cz.csas.cscore.locker.Locker;
 import cz.csas.cscore.locker.LockerMigrationData;
 import cz.csas.cscore.locker.LockerStatus;
 import cz.csas.cscore.locker.Password;
-import cz.csas.cscore.locker.PasswordHashProcess;
+import cz.csas.cscore.locker.PasswordMigrationProcess;
 import cz.csas.cscore.locker.RegistrationOrUnlockResponse;
 import cz.csas.cscore.locker.State;
 import cz.csas.cscore.logger.LogLevel;
@@ -90,7 +90,7 @@ class LockerUIImpl extends LockerUI {
                     .setEncryptionKey(options.getEncryptionKey())
                     .create();
             final Password password = options.getPassword();
-            final PasswordHashProcess process = options.getPasswordHashProcess();
+            final PasswordMigrationProcess passwordMigrationProcess = options.getPasswordMigrationProcess();
 
             if (password.getLockType() == LockType.FINGERPRINT) {
                 // initiate UI
@@ -98,7 +98,7 @@ class LockerUIImpl extends LockerUI {
                 mLockerUIManager.setLockerMigrationCallback(new CallbackBasic<LockerStatus>() {
                     @Override
                     public void success(LockerStatus lockerStatus) {
-                        callMigrationUnlock(password, process, data, callback);
+                        callMigrationUnlock(password, passwordMigrationProcess, data, callback);
                     }
 
                     @Override
@@ -111,7 +111,7 @@ class LockerUIImpl extends LockerUI {
                 intent.putExtra(Constants.MIGRATION_FINGERPRINT_EXTRA, password.getPassword());
                 mContext.startActivity(intent);
             } else {
-                callMigrationUnlock(password, process, data, callback);
+                callMigrationUnlock(password, passwordMigrationProcess, data, callback);
             }
         } else {
             callback.failure(new CsLockerUIError(CsLockerUIError.Kind.BAD_MIGRATION_DATA));
@@ -202,8 +202,8 @@ class LockerUIImpl extends LockerUI {
         getLocker().cancelOAuthLoginActivity();
     }
 
-    private void callMigrationUnlock(Password password, PasswordHashProcess process, LockerMigrationData data, final CallbackUI<LockerStatus> callback) {
-        getLocker().unlockAfterMigration(password, process, data, new CsCallback<RegistrationOrUnlockResponse>() {
+    private void callMigrationUnlock(Password password, PasswordMigrationProcess passwordMigrationProcess, LockerMigrationData data, final CallbackUI<LockerStatus> callback) {
+        getLocker().unlockAfterMigration(password, passwordMigrationProcess, data, new CsCallback<RegistrationOrUnlockResponse>() {
             @Override
             public void success(RegistrationOrUnlockResponse registrationOrUnlockResponse, Response response) {
                 callback.success(LockerUI.getInstance().getLocker().getStatus());
@@ -218,11 +218,16 @@ class LockerUIImpl extends LockerUI {
 
     private boolean validateMigrationFlowOptions(MigrationFlowOptions options) {
         // password hash process is optional, set tu dummy process if not provided
-        if (options.getPasswordHashProcess() == null)
-            options.setPasswordHashProcess(new PasswordHashProcess() {
+        if (options.getPasswordMigrationProcess() == null)
+            options.setPasswordMigrationProcess(new PasswordMigrationProcess() {
                 @Override
                 public String hashPassword(String password) {
                     return password;
+                }
+
+                @Override
+                public String transformPassword(String oldPassword) {
+                    return oldPassword;
                 }
             });
         Password password = options.getPassword();
