@@ -88,7 +88,7 @@ public abstract class LockerUI {
      * implementation to Locker v1.
      * Necessary data to be provided:
      * - Password (m) (including password, lock type and password space size for PIN and GESTURE)
-     * - PasswordHashProcess (o) (to let Locker SDK be available to reproduce your password hash if you use some)
+     * - PasswordMigrationProcess (o) (to let Locker SDK be available to reproduce your password hash if you use some and to transform gesture/pin password hash to Locker SDK format)
      * - Client ID (m) (received during registration)
      * - Device Fingerprint (m) (especially for Android devices,where all device fingerprints don't have to be equal)
      * - OneTimePasswordKey (m) (received during registration)
