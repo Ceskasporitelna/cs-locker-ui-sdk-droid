@@ -14,6 +14,7 @@ import cz.csas.lockerui.config.AuthFlowOptions;
 import cz.csas.lockerui.config.DisplayInfoOptions;
 import cz.csas.lockerui.config.LockerUIOptions;
 import cz.csas.lockerui.config.ShowLogo;
+import cz.csas.lockerui.config.SkipStatusScreen;
 import cz.csas.lockerui.utils.ColorUtils;
 
 /**
@@ -43,6 +44,14 @@ class LockerUIManagerImpl implements LockerUIManager {
     private boolean mChangingPassword;
     private String mPassword;
 
+    public LockerUIManagerImpl() {
+        // default auth flow options
+        mAuthFlowOptions = new AuthFlowOptions.Builder()
+                .setLockedScreenText("")
+                .setRegistrationScreenText("")
+                .setSkipStatusScreen(SkipStatusScreen.ALWAYS)
+                .create();
+    }
 
     @Override
     public void setCurrentLockerUIActivity(Activity activity) {
@@ -71,7 +80,8 @@ class LockerUIManagerImpl implements LockerUIManager {
 
     @Override
     public void setAuthFlowOptions(AuthFlowOptions authFlowOptions) {
-        mAuthFlowOptions = authFlowOptions;
+        if (authFlowOptions != null)
+            mAuthFlowOptions = authFlowOptions;
     }
 
     @Override
