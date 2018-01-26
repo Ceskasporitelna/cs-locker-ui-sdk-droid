@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.1] - 2018-01-26
+
 ## Fixed
 - Set defaults for `AuthFlowOptions` configuration.
 
