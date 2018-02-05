@@ -2,15 +2,15 @@
     "files": [
         {
             "includePattern": "./lockerui/build/libs/(.*)",
-            "uploadPattern": "cz/csas/cs-locker-ui-sdk/3.1.1/$1"
+            "uploadPattern": "cz/csas/cs-locker-ui-sdk/3.1.2/$1"
         },
         {
             "includePattern": "./lockerui/build/outputs/aar/(cs-locker-ui-sdk-release-.*?.aar)",
-            "uploadPattern": "cz/csas/cs-locker-ui-sdk/3.1.1/cs-locker-ui-sdk-3.1.1.aar"
+            "uploadPattern": "cz/csas/cs-locker-ui-sdk/3.1.2/cs-locker-ui-sdk-3.1.2.aar"
         },
         {
             "includePattern": "./lockerui/build/poms/(.*)",
-            "uploadPattern": "cz/csas/cs-locker-ui-sdk/3.1.1/cs-locker-ui-sdk-3.1.1.pom"
+            "uploadPattern": "cz/csas/cs-locker-ui-sdk/3.1.2/cs-locker-ui-sdk-3.1.2.pom"
         }
     ],
     "package": {
@@ -30,8 +30,8 @@
     "publish": true,
     "version": {
         "gpgSign": true,
-        "name": "3.1.1",
-        "released": "2018-01-26",
-        "vcs_tag": "3.1.1"
+        "name": "3.1.2",
+        "released": "2018-02-05",
+        "vcs_tag": "3.1.2"
     }
 }

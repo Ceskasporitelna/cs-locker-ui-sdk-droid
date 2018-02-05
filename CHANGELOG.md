@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.2] - 2018-02-05
+
 ## Fixed
 - Bad error cause to RestError
 
