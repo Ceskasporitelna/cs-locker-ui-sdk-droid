@@ -21,7 +21,6 @@ import android.widget.TextView;
 import csas.cz.lockerui.R;
 import cz.csas.cscore.client.rest.CallbackBasic;
 import cz.csas.cscore.client.rest.CsCallback;
-import cz.csas.cscore.client.rest.CsRestError;
 import cz.csas.cscore.client.rest.client.Response;
 import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.LockType;
@@ -158,7 +157,7 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
                     public void failure(CsSDKError error) {
                         if (LockerUIErrorHandler.handleError(mFragmentCallback, error)) {
                             MainActivity.onUnlockFailed(error);
-                            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure((CsRestError) error);
+                            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure(error);
                         }
                     }
                 });
@@ -186,7 +185,7 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
                 public void failure(CsSDKError error) {
                     if (LockerUIErrorHandler.handleError(mFragmentCallback, error)) {
                         MainActivity.onRegistrationFailed();
-                        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure((CsRestError) error);
+                        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().failure(error);
                     }
                 }
             });
