@@ -457,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCallback 
         switch (showLogo) {
             case ALWAYS:
             case EXCEPT_REGISTRATION:
-                mToolbar.setLogo(ContextCompat.getDrawable(this, R.drawable.logo_csas));
+                mToolbar.setLogo(ContextCompat.getDrawable(this, R.drawable.ic_logo_ceska_sporitelna));
                 break;
             case NEVER:
                 mToolbar.setLogo(null);
