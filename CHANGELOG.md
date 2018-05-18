@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.3] - 2018-05-18
+
 ## Fixed
 - New Ceska Sporitelna logo
 
