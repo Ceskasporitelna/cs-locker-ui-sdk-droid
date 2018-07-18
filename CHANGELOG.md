@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.4] - 2018-07-18
+
 ## Fixed
 - Issues with null pointer exception (#20)
 
