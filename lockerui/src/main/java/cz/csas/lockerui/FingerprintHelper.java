@@ -86,7 +86,8 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
     public boolean isFingerprintAuthAvailable() {
         // permission condition should be always true
         if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED)
-            return mFingerprintManager.isHardwareDetected()
+            return mFingerprintManager != null &&
+                    mFingerprintManager.isHardwareDetected()
                     && mFingerprintManager.hasEnrolledFingerprints()
                     && initCipher();
         return false;

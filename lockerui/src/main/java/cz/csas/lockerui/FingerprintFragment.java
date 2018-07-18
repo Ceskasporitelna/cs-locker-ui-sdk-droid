@@ -92,7 +92,7 @@ public class FingerprintFragment extends Fragment implements FingerprintHelper.C
         mFingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
         // this permission condition should be always true
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED &&
-                mFingerprintManager.hasEnrolledFingerprints()) {
+                mFingerprintManager != null && mFingerprintManager.hasEnrolledFingerprints()) {
             mFingerprintHelper = new FingerprintHelper(mFingerprintManager, mMigrationFingerprintHash, this, getActivity());
             if (mFingerprintHelper.initCipher()) {
                 if (mMigrationFingerprintHash != null)

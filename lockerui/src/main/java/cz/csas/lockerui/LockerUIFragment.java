@@ -24,10 +24,12 @@ import cz.csas.cscore.client.rest.CsCallback;
 import cz.csas.cscore.client.rest.client.Response;
 import cz.csas.cscore.error.CsSDKError;
 import cz.csas.cscore.locker.LockType;
+import cz.csas.cscore.locker.Locker;
 import cz.csas.cscore.locker.LockerRegistrationProcess;
 import cz.csas.cscore.locker.LockerStatus;
 import cz.csas.cscore.locker.RegistrationOrUnlockResponse;
 import cz.csas.cscore.locker.State;
+import cz.csas.lockerui.components.CallbackUI;
 import cz.csas.lockerui.config.SkipStatusScreen;
 import cz.csas.lockerui.error.LockerUIErrorHandler;
 import cz.csas.lockerui.utils.ColorUtils;
@@ -119,7 +121,14 @@ public class LockerUIFragment extends Fragment implements View.OnClickListener {
 
     private void setState() {
         if (mState == State.USER_UNLOCKED) {
-            ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().getLockerUICallback().success(((LockerUIImpl) LockerUI.getInstance()).getLocker().getStatus());
+            // null checks according to crashlytics
+            LockerUIManager lockerUIManager = ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager();
+            if (lockerUIManager != null) {
+                CallbackUI<LockerStatus> lockerUICallback = lockerUIManager.getLockerUICallback();
+                Locker locker = LockerUI.getInstance().getLocker();
+                if (lockerUICallback != null && locker != null)
+                    lockerUICallback.success(locker.getStatus());
+            }
             getActivity().finish();
         } else if (mState == State.USER_LOCKED) {
             mTvUnlockOrRegistration.setText(R.string.unlock_lockerui_activity);

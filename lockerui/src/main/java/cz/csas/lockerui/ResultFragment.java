@@ -95,7 +95,9 @@ public class ResultFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                populateViewForOrientation(LayoutInflater.from(getActivity()), (ViewGroup) getView());
+                Activity context = getActivity();
+                if (context != null)
+                    populateViewForOrientation(LayoutInflater.from(context), (ViewGroup) getView());
             }
         }, 1000);
     }
