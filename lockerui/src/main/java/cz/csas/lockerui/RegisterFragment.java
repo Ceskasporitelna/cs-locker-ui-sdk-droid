@@ -127,38 +127,47 @@ public class RegisterFragment extends Fragment {
         mBtnPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setChangingPassword(false);
-                mFragmentCallback.changeFragmentToPin();
+                handleButtonClicked(cz.csas.cscore.locker.LockType.PIN);
             }
         });
 
         mBtnFingerprint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setChangingPassword(false);
-                mFragmentCallback.changeFragmentToFingerprint();
+                handleButtonClicked(cz.csas.cscore.locker.LockType.FINGERPRINT);
             }
         });
 
         mBtnGesture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setChangingPassword(false);
-                mFragmentCallback.changeFragmentToGesture();
+                handleButtonClicked(cz.csas.cscore.locker.LockType.GESTURE);
             }
         });
 
         mBtnNoSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setChangingPassword(false);
-                if (mState == State.USER_UNREGISTERED) {
-                    handleNoneUnregistered();
-                } else if (mState == State.USER_UNLOCKED) {
-                    handleNoneUnlocked();
-                }
+                handleButtonClicked(cz.csas.cscore.locker.LockType.NONE);
             }
         });
+
+        if (mLockTypes != null && mLockTypes.size() == 1) {
+            switch (mLockTypes.get(0).getLockType()) {
+                case PIN:
+                    handleButtonClicked(cz.csas.cscore.locker.LockType.PIN);
+                    break;
+                case GESTURE:
+                    handleButtonClicked(cz.csas.cscore.locker.LockType.GESTURE);
+                    break;
+                case FINGERPRINT:
+                    handleButtonClicked(cz.csas.cscore.locker.LockType.FINGERPRINT);
+                    break;
+                case NONE:
+                    handleButtonClicked(cz.csas.cscore.locker.LockType.NONE);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -201,6 +210,27 @@ public class RegisterFragment extends Fragment {
                 mBtnPin.setLayoutParams(params);
             }
 
+        }
+    }
+
+    private void handleButtonClicked(cz.csas.cscore.locker.LockType lockType) {
+        ((LockerUIImpl) LockerUI.getInstance()).getLockerUIManager().setChangingPassword(false);
+        switch (lockType) {
+            case PIN:
+                mFragmentCallback.changeFragmentToPin();
+                break;
+            case GESTURE:
+                mFragmentCallback.changeFragmentToGesture();
+                break;
+            case FINGERPRINT:
+                mFragmentCallback.changeFragmentToFingerprint();
+                break;
+            case NONE:
+                if (mState == State.USER_UNREGISTERED)
+                    handleNoneUnregistered();
+                else if (mState == State.USER_UNLOCKED)
+                    handleNoneUnlocked();
+                break;
         }
     }
 
