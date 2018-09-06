@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.5] - 2018-09-06
+
 ### Added
 - Registration security selection screen is skipped if only one security method is available.
 
