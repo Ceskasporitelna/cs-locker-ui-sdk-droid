@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.6] - 2018-09-20
+
 ### Fixed
 - Fingerprint manager sanity check to prevent null pointer exception
 
