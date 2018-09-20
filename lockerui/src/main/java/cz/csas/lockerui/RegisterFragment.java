@@ -236,14 +236,11 @@ public class RegisterFragment extends Fragment {
 
     @SuppressLint("NewApi")
     private boolean checkFingerprintAvailability() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        // this permission condition should be always true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED) {
             FingerprintManager fingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
-            // this permission condition should be always true
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED &&
-                    !fingerprintManager.isHardwareDetected()) {
-                return false;
-            } else
-                return true;
+            // fingerprint manager sanity check
+            return fingerprintManager != null && fingerprintManager.isHardwareDetected();
         }
         return false;
     }
