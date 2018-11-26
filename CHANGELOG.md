@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.7] - 2018-11-26
+
 ### Fixed
 - Update build tools and android api support
 
