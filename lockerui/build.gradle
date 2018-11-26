@@ -5,35 +5,34 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode readVersionCode()
         versionName readVersionName()
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-proguard-rules.pro"
     }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
 
     libraryVariants.all { variant ->
-        variant.outputs.each { output ->
-            def file = output.outputFile
-            output.outputFile =
-                    new File(file.parent,
-                            file.name.replace("lockerui", "cs-locker-ui-sdk").replace(".aar", "-" + defaultConfig.versionName + ".aar"))
-
+        variant.outputs.all {
+            outputFileName = "cs-locker-ui-sdk-release-" + defaultConfig.versionName + ".aar"
         }
     }
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'cz.csas:cs-core-sdk:1.5.3@aar'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'cz.csas:cs-core-sdk:1.6.0@aar'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
 
 // maven pom specs
