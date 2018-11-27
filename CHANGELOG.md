@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Version of core sdk change
+
 ## [3.1.7] - 2018-11-26
 
 ### Fixed
